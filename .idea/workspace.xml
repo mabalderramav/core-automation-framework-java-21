@@ -23,6 +23,23 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -36,17 +53,170 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.UiConfigTest.executor": "Run",
+    "Gradle.UiConfigTest.getBrowser.executor": "Run",
+    "Gradle.UiConfigTest.getInstance.executor": "Run",
+    "Gradle.UiConfigWordsTest.executor": "Run",
+    "Gradle.UiConfigWordsTest.testUiConfigWords.executor": "Run",
+    "Gradle.UiConfigWordsTest.testVal.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/projects/auto/core-templates/core-automation-framework-java-21/core-ui/src/main/java/com/miasoftnanus/automation/core/ui",
-    "onboarding.tips.debug.path": "D:/projects/auto/core-templates/core-automation-framework-java-21/core-ui/src/main/java/com/miasoftnanus/automation/core/ui/Main.java",
+    "last_opened_file_path": "D:/projects/auto/core-templates/core-automation-framework-java-21/core-utils",
+    "onboarding.tips.debug.path": "D:/projects/auto/core-templates/core-automation-framework-java-21/core-utils/src/main/java/com/miasoftnanus/automation/core/utils/Main.java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\auto\core-templates\core-automation-framework-java-21\core-utils" />
+      <recent name="D:\projects\auto\core-templates\core-automation-framework-java-21\core-ui" />
+      <recent name="D:\projects\auto\core-templates\core-automation-framework-java-21\core-utils\src\main\java\com\miasoftnanus\automation\core\utils" />
+      <recent name="D:\projects\auto\core-templates\core-automation-framework-java-21\core-ui\src\main\java\com\miasoftnanus\automation\core\ui" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.miasoftnanus.automation.core.ui.config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.UiConfigWordsTest">
+    <configuration name="UiConfigTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core-ui:test" />
+            <option value="--tests" />
+            <option value="&quot;com.miasoftnanus.automation.core.ui.config.UiConfigTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UiConfigTest.getBrowser" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core-ui:test" />
+            <option value="--tests" />
+            <option value="&quot;com.miasoftnanus.automation.core.ui.config.UiConfigTest.getBrowser&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UiConfigWordsTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core-ui:test" />
+            <option value="--tests" />
+            <option value="&quot;com.miasoftnanus.automation.core.ui.config.UiConfigWordsTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UiConfigWordsTest.testUiConfigWords" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core-ui:test" />
+            <option value="--tests" />
+            <option value="&quot;com.miasoftnanus.automation.core.ui.config.UiConfigWordsTest.testUiConfigWords&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UiConfigWordsTest.testVal" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":core-ui:test" />
+            <option value="--tests" />
+            <option value="&quot;com.miasoftnanus.automation.core.ui.config.UiConfigWordsTest.testVal&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.UiConfigWordsTest" />
+        <item itemvalue="Gradle.UiConfigWordsTest.testUiConfigWords" />
+        <item itemvalue="Gradle.UiConfigWordsTest.testVal" />
+        <item itemvalue="Gradle.UiConfigTest" />
+        <item itemvalue="Gradle.UiConfigTest.getBrowser" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -67,9 +237,9 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/core-ui/src/main/java/com/miasoftnanus/automation/core/ui/Main.java</url>
+          <url>file://$PROJECT_DIR$/core-utils/src/main/java/com/miasoftnanus/automation/core/utils/Main.java</url>
           <line>13</line>
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
