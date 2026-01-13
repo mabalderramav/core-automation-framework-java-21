@@ -32,8 +32,9 @@ public class GsonReadEnvironmentJsonFileRepository implements ReadEnvironmentJso
      */
     @Override
     public List<Environment> readEnvironmentJsonFile(String environmentFilePath) {
-        var environmentJsonAsString = loadJsonStringFromFile(environmentFilePath);
-        var environmentGsonEntities = fromJsonStringToList(environmentJsonAsString, EnvironmentGsonEntity.class);
+        String environmentJsonAsString = loadJsonStringFromFile(environmentFilePath);
+        List<EnvironmentGsonEntity> environmentGsonEntities =
+                fromJsonStringToList(environmentJsonAsString, EnvironmentGsonEntity.class);
         return EnvironmentMapper.toModel(environmentGsonEntities);
     }
 }
