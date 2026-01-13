@@ -3,7 +3,9 @@ package com.miasoftnanus.automation.core.ui.bootstrap.config;
 /**
  * Custom reserved words enum.
  */
-public enum ReservedWords {
+enum ReservedWords {
+    GRADLE_PROP("./gradle.properties"),
+    UI_PROP_FILE("uiPropFilePath"),
     BROWSER("browser"),
     ENVIRONMENT_NAME("environmentName"),
     EXPLICIT_TIME("explicitTimeWait"),

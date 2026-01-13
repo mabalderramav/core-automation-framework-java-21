@@ -15,14 +15,15 @@ import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.HEIGHT;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.IMPLICIT_TIME;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.INCOGNITO_MODE;
+import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.GRADLE_PROP;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.PAGE_LOAD_TIME;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.SELENIUM_HUB_PORT;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.SELENIUM_HUB_URL;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.SLEEP_TIME;
+import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.UI_PROP_FILE;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.WIDTH;
 
 public class UiConfig {
-    private static final String UI_PROP_FILE = "./gradle.properties";
     private static UiConfig instance;
 
     @Setter
@@ -59,21 +60,23 @@ public class UiConfig {
      * Initializes an instance of {@link UiConfig}.
      */
     private UiConfig() {
-        PropertiesFileReader propertiesFileReader = new PropertiesFileReader(UI_PROP_FILE);
-        browserLogsEnabled = Boolean.parseBoolean(propertiesFileReader.getPropertyValue(BROWSER_LOGS.val()));
-        environment = propertiesFileReader.getPropertyValue(ENVIRONMENT_NAME.val());
-        implicitTime = Integer.parseInt(propertiesFileReader.getPropertyValue(IMPLICIT_TIME.val()));
-        explicitTime = Integer.parseInt(propertiesFileReader.getPropertyValue(EXPLICIT_TIME.val()));
-        sleepTime = Integer.parseInt(propertiesFileReader.getPropertyValue(SLEEP_TIME.val()));
-        browser = propertiesFileReader.getPropertyValue(BROWSER.val());
-        pageLoadTime = Long.parseLong(propertiesFileReader.getPropertyValue(PAGE_LOAD_TIME.val()));
-        chromeDriverVersion = propertiesFileReader.getPropertyValue(CHROME_DRIVER_VERSION.val());
-        downloadsFolder = propertiesFileReader.getPropertyValue(DOWNLOADS.val());
-        widthOfBrowser = Integer.parseInt(propertiesFileReader.getPropertyValue(WIDTH.val()));
-        heightOfBrowser = Integer.parseInt(propertiesFileReader.getPropertyValue(HEIGHT.val()));
-        seleniumHubUrl = propertiesFileReader.getPropertyValue(SELENIUM_HUB_URL.val());
-        seleniumHubPort = propertiesFileReader.getPropertyValue(SELENIUM_HUB_PORT.val());
-        isIncognitoMode = Boolean.parseBoolean(propertiesFileReader.getPropertyValue(INCOGNITO_MODE.val()));
+        var propertiesFileReader = new PropertiesFileReader(GRADLE_PROP.val());
+        var uiPropFilePath = propertiesFileReader.getPropertyValue(UI_PROP_FILE.val());
+        var propertiesUiFileReader = new PropertiesFileReader(uiPropFilePath);
+        browserLogsEnabled = Boolean.parseBoolean(propertiesUiFileReader.getPropertyValue(BROWSER_LOGS.val()));
+        environment = propertiesUiFileReader.getPropertyValue(ENVIRONMENT_NAME.val());
+        implicitTime = Integer.parseInt(propertiesUiFileReader.getPropertyValue(IMPLICIT_TIME.val()));
+        explicitTime = Integer.parseInt(propertiesUiFileReader.getPropertyValue(EXPLICIT_TIME.val()));
+        sleepTime = Integer.parseInt(propertiesUiFileReader.getPropertyValue(SLEEP_TIME.val()));
+        browser = propertiesUiFileReader.getPropertyValue(BROWSER.val());
+        pageLoadTime = Long.parseLong(propertiesUiFileReader.getPropertyValue(PAGE_LOAD_TIME.val()));
+        chromeDriverVersion = propertiesUiFileReader.getPropertyValue(CHROME_DRIVER_VERSION.val());
+        downloadsFolder = propertiesUiFileReader.getPropertyValue(DOWNLOADS.val());
+        widthOfBrowser = Integer.parseInt(propertiesUiFileReader.getPropertyValue(WIDTH.val()));
+        heightOfBrowser = Integer.parseInt(propertiesUiFileReader.getPropertyValue(HEIGHT.val()));
+        seleniumHubUrl = propertiesUiFileReader.getPropertyValue(SELENIUM_HUB_URL.val());
+        seleniumHubPort = propertiesUiFileReader.getPropertyValue(SELENIUM_HUB_PORT.val());
+        isIncognitoMode = Boolean.parseBoolean(propertiesUiFileReader.getPropertyValue(INCOGNITO_MODE.val()));
     }
 
     /**

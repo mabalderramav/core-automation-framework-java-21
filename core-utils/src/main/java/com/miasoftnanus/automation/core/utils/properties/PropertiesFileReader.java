@@ -61,11 +61,11 @@ public class PropertiesFileReader {
         String property = System.getProperty(propertyName);
         if (Objects.isNull(property)) {
             property = properties.getProperty(propertyName);
-            log.info("properties.getProperty({}) -> value: {}", propertyName, property);
+            log.info("property name: {} -> value: {}", propertyName, property);
             return property;
         }
 
-        log.info("System.getProperty({}) -> value: {}", propertyName, property);
+        log.info("property name: {} -> value: {}", propertyName, property);
         return property;
     }
 }
