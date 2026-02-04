@@ -16,5 +16,5 @@ public interface ReadEnvironmentJsonFileRepository {
      * @param environmentFilePath the path to the environment JSON file to be read.
      * @return a list of parsed {@link Environment} objects.
      */
-    List<Environment> readEnvironmentJsonFile(String environmentFilePath);
+    List<Environment> readJsonFile(String environmentFilePath);
 }

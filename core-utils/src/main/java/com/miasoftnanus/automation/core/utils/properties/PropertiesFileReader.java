@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -15,7 +16,6 @@ import java.util.Properties;
  */
 @Log4j2
 public class PropertiesFileReader {
-    private static final String ENCODING = "UTF-8";
     private Properties properties;
 
     /**
@@ -39,7 +39,7 @@ public class PropertiesFileReader {
         if (!new File(filePath).exists()) {
             path = filePath.replace(ReservedWords.DOUBLE_DOT_AND_SLASH.val(), ReservedWords.STRING_EMPTY.val());
         }
-        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(path), ENCODING)) {
+        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8)) {
             this.properties = new Properties();
             this.properties.load(inputFile);
         } catch (FileNotFoundException e) {

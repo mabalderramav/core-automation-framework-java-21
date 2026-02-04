@@ -16,13 +16,13 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class Version {
     private String name;
-    private String version;
+    private String pathVersion;
 
     /**
      * Initializes an instance of {@link Version}.
      */
     public Version() {
         this.name = ReservedWords.EMPTY_STRING.val();
-        this.version = ReservedWords.EMPTY_STRING.val();
+        this.pathVersion = ReservedWords.EMPTY_STRING.val();
     }
 }

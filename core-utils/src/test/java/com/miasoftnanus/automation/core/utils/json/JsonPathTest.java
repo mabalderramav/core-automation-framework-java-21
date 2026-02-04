@@ -50,17 +50,6 @@ class JsonPathTest {
     }
 
     @Test
-    @DisplayName("Test getResultList method")
-    void getResultList() throws Exception {
-        String json = readTestJson();
-        List<String> titles = JsonPath.getResultList(json, "$.store.book[*].title")
-                .stream().map(Object::toString).toList();
-        assertNotNull(titles);
-        assertEquals(4, titles.size());
-        assertTrue(titles.contains("Moby Dick"));
-    }
-
-    @Test
     @DisplayName("Test setValue method")
     void setValue() throws Exception {
         JsonObject json = readTestJsonObject();

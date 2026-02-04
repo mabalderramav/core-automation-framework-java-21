@@ -4,18 +4,16 @@ import com.miasoftnanus.automation.core.utils.properties.PropertiesFileReader;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
-
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.BROWSER;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.BROWSER_LOGS;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.CHROME_DRIVER_VERSION;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.DOWNLOADS;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.ENVIRONMENT_NAME;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.EXPLICIT_TIME;
+import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.GRADLE_PROP;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.HEIGHT;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.IMPLICIT_TIME;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.INCOGNITO_MODE;
-import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.GRADLE_PROP;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.PAGE_LOAD_TIME;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.SELENIUM_HUB_PORT;
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.SELENIUM_HUB_URL;
@@ -24,8 +22,6 @@ import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords
 import static com.miasoftnanus.automation.core.ui.bootstrap.config.ReservedWords.WIDTH;
 
 public class UiConfig {
-    private static UiConfig instance;
-
     @Setter
     private boolean browserLogsEnabled;
     @Getter
@@ -80,15 +76,22 @@ public class UiConfig {
     }
 
     /**
-     * Initializes the singleton UI Config instance.
-     *
-     * @return singleton instance.
+     * Holds the singleton instance of the {@code UiConfig} class.
+     * This nested static class leverages the Java ClassLoader mechanism to ensure
+     * thread-safe lazy initialization of the {@code UiConfig} instance.
      */
-    public static synchronized UiConfig getInstance() {
-        if (Objects.isNull(instance)) {
-            instance = new UiConfig();
-        }
-        return instance;
+    private static class SingletonHolder {
+        private static final UiConfig INSTANCE = new UiConfig();
+    }
+
+    /**
+     * Returns the singleton instance of the {@code UiConfig} class.
+     * This method ensures that only one instance of {@code UiConfig} is created and shared across the application.
+     *
+     * @return the singleton instance of {@code UiConfig}.
+     */
+    public static UiConfig getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     /**

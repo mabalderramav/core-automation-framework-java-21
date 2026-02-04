@@ -31,7 +31,7 @@ public class GsonReadEnvironmentJsonFileRepository implements ReadEnvironmentJso
      * {@inheritDoc}
      */
     @Override
-    public List<Environment> readEnvironmentJsonFile(String environmentFilePath) {
+    public List<Environment> readJsonFile(String environmentFilePath) {
         String environmentJsonAsString = loadJsonStringFromFile(environmentFilePath);
         List<EnvironmentGsonEntity> environmentGsonEntities =
                 fromJsonStringToList(environmentJsonAsString, EnvironmentGsonEntity.class);

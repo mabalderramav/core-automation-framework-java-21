@@ -1,0 +1,36 @@
+[
+  {
+    "Name": "DEV",
+    "Portals": [
+      {
+        "Name": "MIASOFTNANUS_UI",
+        "LoginUrl": "https://miasoftnanus.dev.idtm.com/login",
+        "BaseUrl": "https://miasoftnanus.com/",
+        "Users": [
+          {
+            "Type": "GOOGLE",
+            "Username": "6QhbaFoQrUG1oIMKUs7EQg==",
+            "Password": "mNAIzB3H3vFGWx3rLCkptn+6nIC4AjJgU0fnUZL34uw="
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "QA",
+    "Portals": [
+      {
+        "Name": "MIASOFTNANUS_UI",
+        "LoginUrl": "https://miasoftnanus.qa.idtm.io/login",
+        "BaseUrl": "https://miasoftnanus.qa.idtm.io/",
+        "Users": [
+          {
+            "Type": "GOOGLE",
+            "Username": "6QhbaFoQrUG1oIMKUs7EQg==",
+            "Password": "mNAIzB3H3vFGWx3rLCkptn+6nIC4AjJgU0fnUZL34uw="
+          }
+        ]
+      }
+    ]
+  }
+]

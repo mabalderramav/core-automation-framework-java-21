@@ -17,7 +17,7 @@ import java.util.List;
  * - Deserializing JSON strings into objects.
  * - Deserializing JSON strings into lists of objects.
  * <p>
- * This class is designed to prevent instantiation and should only be used via its static methods.
+* This class is designed to prevent instantiation and should only be used via its static methods.
  */
 public final class JsonParser {
 

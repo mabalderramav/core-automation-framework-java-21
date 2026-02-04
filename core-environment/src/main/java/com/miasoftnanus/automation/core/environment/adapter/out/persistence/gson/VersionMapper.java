@@ -33,7 +33,7 @@ class VersionMapper {
 
         Version model = new Version();
         model.name(entity.name());
-        model.version(entity.version());
+        model.pathVersion(entity.version());
         return Optional.of(model);
     }
 

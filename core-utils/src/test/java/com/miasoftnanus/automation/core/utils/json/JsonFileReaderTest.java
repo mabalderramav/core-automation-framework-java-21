@@ -1,18 +1,13 @@
 package com.miasoftnanus.automation.core.utils.json;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JsonFileReaderTest {
@@ -98,12 +93,5 @@ class JsonFileReaderTest {
         assertTrue(jsonString.startsWith("["));
         assertTrue(jsonString.contains("Item2"));
         assertTrue(jsonString.contains("value"));
-    }
-
-    @Test
-    @DisplayName("Should throw JsonSyntaxException for invalid JSON")
-    void shouldThrowJsonSyntaxExceptionForInvalidJson() {
-        String invalidJson = "{ invalid: true, "; // malformed JSON
-        assertThrows(JsonSyntaxException.class, () -> JsonParser.parseReader(new StringReader(invalidJson)));
     }
 }

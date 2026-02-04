@@ -66,17 +66,6 @@ public final class JsonPath {
     }
 
     /**
-     * Gets of a filter result.
-     *
-     * @param jsonContent   the JSON string.
-     * @param jsonPathFiler Filter expression.
-     * @return filter results.
-     */
-    public static List<?> getResultList(final String jsonContent, final String jsonPathFiler) {
-        return com.jayway.jsonpath.JsonPath.parse(jsonContent).read(jsonPathFiler);
-    }
-
-    /**
      * Gets new JSON string with the new values.
      *
      * @param jsonContent   the JSON object.

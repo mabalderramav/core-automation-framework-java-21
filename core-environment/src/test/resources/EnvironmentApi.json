@@ -1,0 +1,212 @@
+[
+  {
+    "Name": "DEV",
+    "Apis": [
+      {
+        "Name": "MIASOFTNANUS_CONF",
+        "BaseUrl": "https://miasoftnanus-conf-api.dev.idtm.io/",
+        "Versions": [
+          {
+            "Name": "V1",
+            "PathVersion": "v1/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "CPN5LOhw3WcLthY7DtlcsA==",
+                "Password": "JZWD8wxgJhogF16AMA9crA=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "MIASOFTNANUS_MTU_INT",
+        "BaseUrl": "https://miasoftnanus-mtu-int-api.dev.idtm.io/",
+        "Versions": [
+          {
+            "Name": "V1",
+            "PathVersion": "v1/"
+          },
+          {
+            "Name": "V2",
+            "PathVersion": "v2/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "CPN5LOhw3WcLthY7DtlcsA==",
+                "Password": "JZWD8wxgJhogF16AMA9crA=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "GRAYLOG-DTC",
+        "BaseUrl": "https://graylog.dtc-utils.idtm.io/",
+        "Stream": "60c325c651d7e06b48586bcc",
+        "Versions": [
+          {
+            "Name": "V1-API",
+            "PathVersion": "api/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "ks+5T8wKYEoB333IKiBRND2CXXcKd0sjY8ZqZO3lybz8d8Q6PMz2vF0d2Pn47QdAFijw9OIxSq62Z7uffqI5wA==",
+                "Password": "z3488lmi9oBT6JGLsVH3xg=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "SPLUNK-PREM",
+        "BaseUrl": "https://splunk-prem.miasoftnanus.com:8089/",
+        "Type": "REST",
+        "SourceType": "k2-dev-dtc",
+        "Index": "app_logstash_np",
+        "Source": "K2",
+        "IsSourceTypeInclude": true,
+        "Environment": "k2-dev",
+        "Versions": [
+          {
+            "Name": "V1-API",
+            "PathVersion": ""
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "tBN3jZk5PRoFJXnH3Ox34g==",
+                "Password": "JymmMvl2OpFaAzPiseECQQ==",
+                "Token": "JymmMvl2OpFaAzPiseECQQ==erftR"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "QA",
+    "Apis": [
+      {
+        "Name": "MTU-CONF",
+        "BaseUrl": "https://miasoftnanus-mtu-conf-api.qa.idtm.io/",
+        "Versions": [
+          {
+            "Name": "V1",
+            "PathVersion": "v1/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "CPN5LOhw3WcLthY7DtlcsA==",
+                "Password": "KcuAGWJQ8aMdlDJtx5WBEw=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "MTU-INT",
+        "BaseUrl": "https://miasoftnanus-mtu-int-api.qa.idtm.io/",
+        "Versions": [
+          {
+            "Name": "V1",
+            "PathVersion": "v1/"
+          },
+          {
+            "Name": "V2",
+            "PathVersion": "v2/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "CPN5LOhw3WcLthY7DtlcsA==",
+                "Password": "KcuAGWJQ8aMdlDJtx5WBEw=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "GRAYLOG-DTC",
+        "BaseUrl": "https://graylog.dtc-utils.idtm.io/",
+        "Stream": "6425b62eae1e011706c65fb2",
+        "Versions": [
+          {
+            "Name": "V1-API",
+            "PathVersion": "api/"
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "ks+5T8wKYEoB333IKiBRND2CXXcKd0sjY8ZqZO3lybz8d8Q6PMz2vF0d2Pn47QdAFijw9OIxSq62Z7uffqI5wA==",
+                "Password": "z3488lmi9oBT6JGLsVH3xg=="
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "SPLUNK-PREM",
+        "BaseUrl": "https://splunk-prem.miasoftnanus.com:8089/",
+        "Type": "REST",
+        "SourceType": "k2-dev-dtc",
+        "Index": "app_logstash_np",
+        "Source": "K2",
+        "IsSourceTypeInclude": true,
+        "Environment": "k2-qa",
+        "Versions": [
+          {
+            "Name": "V1-API",
+            "PathVersion": ""
+          }
+        ],
+        "Authentications": [
+          {
+            "Type": "BASIC",
+            "Users": [
+              {
+                "Type": "API-AUTO",
+                "Username": "tBN3jZk5PRoFJXnH3Ox34g==",
+                "Password": "JymmMvl2OpFaAzPiseECQQ==",
+                "Token": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

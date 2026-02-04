@@ -1,0 +1,2 @@
+# Sonar Qube Analysis Command Line
+./gradlew sonar -Dsonar.projectKey=core-automation-framework-java-21 -Dsonar.projectName='core-automation-framework-java-21' -Dsonar.host.url=http://localhost:9000 -Dsonar.token=

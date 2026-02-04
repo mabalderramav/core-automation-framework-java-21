@@ -1,0 +1,84 @@
+package com.miasoftnanus.automation.core.environment.bootstrap;
+
+import com.miasoftnanus.automation.core.environment.model.Portal;
+import com.miasoftnanus.automation.core.environment.model.User;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.util.Objects;
+
+/**
+ * Manages the UI environment configuration and provides access to details such as the portal,
+ * user, and environment-specific settings.
+ *
+ * <p>
+ * This class extends {@code EnvironmentManager} to specialize environment management for
+ * UI-related configurations. It facilitates the initialization and retrieval of a
+ * singleton instance of {@code UiEnvironmentManager}, ensuring a single point of access
+ * throughout the application.
+ * </p>
+ */
+@Data
+@Accessors(fluent = true)
+@EqualsAndHashCode(callSuper = true)
+public class EnvironmentUiManager extends EnvironmentManager {
+    private static EnvironmentUiManager instance;
+    private final User user;
+    private final Portal portal;
+    private final String portalWeb;
+    private final String userType;
+
+    /**
+     * Constructs a new instance of the {@code UiEnvironmentManager} class, initializing the
+     * UI environment configuration with the specified portal, user type, and environment file path.
+     *
+     * <p>
+     * This constructor retrieves and sets the associated environment, portal, and user objects
+     * based on their respective names and types provided as parameters. Fallback objects
+     * are created with default values if no matching entities are found.
+     * </p>
+     *
+     * @param environmentName     the name of the environment to be managed.
+     * @param portalWeb           the name of the portal within the environment.
+     * @param userType            the type of user to be associated with the environment.
+     * @param environmentFilePath the file path to the JSON file containing environment configuration.
+     */
+    private EnvironmentUiManager(final String environmentName,
+                                 final String portalWeb,
+                                 final String userType,
+                                 final String environmentFilePath) {
+        super(environmentName, environmentFilePath);
+        this.portalWeb = portalWeb;
+        this.userType = userType;
+        this.portal = environment.portals().stream()
+                .filter(portalEnv -> portalEnv.name().equalsIgnoreCase(portalWeb))
+                .findFirst()
+                .orElse(new Portal());
+        this.user = portal.users().stream()
+                .filter(userEnv -> userEnv.type().equalsIgnoreCase(userType))
+                .findFirst()
+                .orElse(new User());
+    }
+
+    /**
+     * Retrieves the singleton instance of the {@code UiEnvironmentManager} class. If an instance does not already exist,
+     * a new instance is created using the provided parameters.
+     *
+     * @param environmentName     the name of the environment to be managed.
+     * @param portalWeb           the name of the portal within the environment.
+     * @param userType            the type of user to be associated with the environment.
+     * @param environmentFilePath the file path to the JSON file containing environment configuration.
+     * @return the singleton instance of {@code UiEnvironmentManager}.
+     */
+    public static synchronized EnvironmentUiManager getInstance(final String environmentName,
+                                                                final String portalWeb,
+                                                                final String userType,
+                                                                final String environmentFilePath) {
+        if (Objects.isNull(instance)) {
+            instance = new EnvironmentUiManager(environmentName, portalWeb, userType, environmentFilePath);
+        }
+
+        return instance;
+    }
+}

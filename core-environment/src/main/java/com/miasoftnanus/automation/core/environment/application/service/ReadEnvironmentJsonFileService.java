@@ -28,6 +28,6 @@ public class ReadEnvironmentJsonFileService implements ReadEnvironmentJsonFileUs
      */
     @Override
     public List<Environment> readJsonFile(String environmentFilePath) {
-        return readEnvironmentJsonFileRepository.readEnvironmentJsonFile(environmentFilePath);
+        return readEnvironmentJsonFileRepository.readJsonFile(environmentFilePath);
     }
 }

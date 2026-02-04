@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Utility class for reading and processing content from JSON files.
@@ -21,7 +22,6 @@ import java.io.InputStreamReader;
  */
 @Log4j2
 public final class JsonFileReader {
-    private static final String ENCODING = "UTF-8";
 
     /**
      * Private constructor to prevent instantiation of the {@code JsonFileReader} class.
@@ -49,7 +49,7 @@ public final class JsonFileReader {
             jsonPath = jsonFilePath.replace(ReservedWords.DOUBLE_DOT_AND_SLASH.val(),
                     ReservedWords.STRING_EMPTY.val());
         }
-        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(jsonPath), ENCODING)) {
+        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(jsonPath), StandardCharsets.UTF_8)) {
             jsonObject = (JsonObject) JsonParser.parseReader(inputFile);
         } catch (IOException e) {
             log.warn("Problem while reading the file", e);
@@ -73,7 +73,7 @@ public final class JsonFileReader {
             jsonPath = jsonFilePath.replace(ReservedWords.DOUBLE_DOT_AND_SLASH.val(),
                     ReservedWords.STRING_EMPTY.val());
         }
-        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(jsonPath), ENCODING)) {
+        try (InputStreamReader inputFile = new InputStreamReader(new FileInputStream(jsonPath), StandardCharsets.UTF_8)) {
             jsonContent = JsonParser.parseReader(inputFile);
         } catch (IOException e) {
             log.warn("Problem while reading the file", e);
