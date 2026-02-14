@@ -51,14 +51,22 @@ public class EnvironmentUiManager extends EnvironmentManager {
         super(environmentName, environmentFilePath);
         this.portalWeb = portalWeb;
         this.userType = userType;
-        this.portal = environment.portals().stream()
-                .filter(portalEnv -> portalEnv.name().equalsIgnoreCase(portalWeb))
-                .findFirst()
-                .orElse(new Portal());
-        this.user = portal.users().stream()
+        this.portal = getPortal(portalWeb);
+        this.user = getUser(userType);
+    }
+
+    private User getUser(String userType) {
+        return portal.users().stream()
                 .filter(userEnv -> userEnv.type().equalsIgnoreCase(userType))
                 .findFirst()
                 .orElse(new User());
+    }
+
+    private Portal getPortal(String portalWeb) {
+        return environment.portals().stream()
+                .filter(portalEnv -> portalEnv.name().equalsIgnoreCase(portalWeb))
+                .findFirst()
+                .orElse(new Portal());
     }
 
     /**
