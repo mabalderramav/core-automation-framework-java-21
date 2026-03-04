@@ -1,101 +1,93 @@
 package com.miasoftnanus.automation.core.environment.bootstrap;
 
-import org.junit.jupiter.api.DisplayName;
+import com.miasoftnanus.automation.core.environment.model.Portal;
+import com.miasoftnanus.automation.core.environment.model.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
- * Unit tests for the {@link EnvironmentUiManager} class.
- * <p>
- * The tests focus on validating the behavior of the singleton method {@code getInstance},
- * covering scenarios such as instance creation, reusability, and initialization with valid or fallback entities.
+ * Test class for {@link EnvironmentUiManager}, specifically the {@code getInstance} method.
+ * Validates the singleton functionality and proper initialization of environment-specific details.
  */
 class EnvironmentUiManagerTest {
 
     @Test
-    @DisplayName("Should create a new instance of UiEnvironmentManager with valid parameters")
-    void testGetInstanceWithValidParameters() {
+    void getInstance_ShouldReturnSingletonInstance_WhenCalledWithValidArguments() {
         // Arrange
         String environmentName = "QA";
-        String portalWeb = "MainPortal";
-        String userType = "Admin";
-        String environmentFilePath = "test-environment.json";
-
-        // Act
-        EnvironmentUiManager manager = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
-
-        // Assert
-        assertNotNull(manager, "Manager instance should not be null.");
-        assertNotNull(manager.portal(), "Portal should not be null.");
-        assertNotNull(manager.user(), "User should not be null.");
-        assertNotNull(manager.environment(), "Environment should not be null.");
-        assertEquals(environmentName, manager.environment().name(), "Environment name should match.");
-        assertEquals(portalWeb, manager.portalWeb(), "Portal web name should match.");
-        assertEquals(userType, manager.userType(), "User type should match.");
-    }
-
-    @Test
-    @DisplayName("Should return the same instance on multiple calls to getInstance")
-    void testGetInstanceReturnsSameInstance() {
-        // Arrange
-        String environmentName = "QA";
-        String portalWeb = "MainPortal";
-        String userType = "Admin";
-        String environmentFilePath = "test-environment.json";
+        String portalWeb = "MIASOFTNANUS_UI";
+        String userType = "GOOGLE";
+        String environmentFilePath = "./src/test/resources/EnvironmentUi.json";
 
         // Act
         EnvironmentUiManager instance1 = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
         EnvironmentUiManager instance2 = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
 
         // Assert
-        assertSame(instance1, instance2, "The same instance should be returned for multiple calls to getInstance.");
+        assertNotNull(instance1, "The instance should not be null.");
+        assertNotNull(instance2, "The instance should not be null.");
+        assertSame(instance1, instance2, "The singleton instances should be the same.");
+        assertEquals(portalWeb, instance1.portalWeb(), "The portalWeb should match the assigned value.");
+        assertEquals(userType, instance1.userType(), "The userType should match the assigned value.");
     }
 
     @Test
-    @DisplayName("Should return fallback objects if environment, portal, or user is not found")
-    void testGetInstanceWithFallbackObjects() {
+    void getInstance_ShouldInitializePortalAndUser_WhenCalledWithValidArguments() {
         // Arrange
-        String invalidEnvironmentName = "NonExistentEnvironment";
-        String invalidPortalWeb = "NonExistentPortal";
-        String invalidUserType = "NonExistentUser";
-        String environmentFilePath = "test-environment.json";
+        String environmentName = "TestEnvironment";
+        String portalWeb = "TestPortal";
+        String userType = "Admin";
+        String environmentFilePath = "./src/test/resources/EnvironmentUi.json";
 
         // Act
-        EnvironmentUiManager manager = EnvironmentUiManager.getInstance(invalidEnvironmentName, invalidPortalWeb, invalidUserType, environmentFilePath);
+        EnvironmentUiManager instance = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
 
         // Assert
-        assertNotNull(manager, "Manager instance should not be null.");
-        assertNotNull(manager.portal(), "Portal should not be null even when not found.");
-        assertNotNull(manager.user(), "User should not be null even when not found.");
-        assertNotNull(manager.environment(), "Environment should not be null even when not found.");
-        assertEquals("NonExistentEnvironment", manager.environment().name(), "Invalid environment name should match input.");
+        assertNotNull(instance, "The instance should not be null.");
+        assertNotNull(instance.portal(), "The portal should not be null.");
+        assertNotNull(instance.user(), "The user should not be null.");
     }
 
     @Test
-    @DisplayName("Should not create a new instance if one already exists")
-    void testSingletonBehavior() {
+    void getInstance_ShouldFallbackToDefaults_WhenNoMatchingPortalOrUserFound() {
         // Arrange
-        String environmentName1 = "QA";
-        String portalWeb1 = "MainPortal";
-        String userType1 = "Admin";
-        String environmentFilePath1 = "test-environment1.json";
-
-        String environmentName2 = "Prod";
-        String portalWeb2 = "SecondaryPortal";
-        String userType2 = "Viewer";
-        String environmentFilePath2 = "test-environment2.json";
+        EnvironmentUiManager.resetInstance();
+        String environmentName = "InvalidEnvironment";
+        String portalWeb = "NonExistentPortal";
+        String userType = "UnknownUserType";
+        String environmentFilePath = "./src/test/resources/EnvironmentUi.json";
 
         // Act
-        EnvironmentUiManager firstInstance = EnvironmentUiManager.getInstance(environmentName1, portalWeb1, userType1, environmentFilePath1);
-        EnvironmentUiManager secondInstance = EnvironmentUiManager.getInstance(environmentName2, portalWeb2, userType2, environmentFilePath2);
+        EnvironmentUiManager instance = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
 
         // Assert
-        assertSame(firstInstance, secondInstance, "A new instance should not be created if one already exists.");
-        assertEquals(environmentName1, firstInstance.environment().name(), "Environment name should match the first instance's initialization.");
-        assertEquals(portalWeb1, firstInstance.portalWeb(), "Portal name should match the first instance's initialization.");
-        assertEquals(userType1, firstInstance.userType(), "User type should match the first instance's initialization.");
+        assertNotNull(instance, "The instance should not be null.");
+        assertNotNull(instance.portal(), "The portal should not be null.");
+        assertNotNull(instance.user(), "The user should not be null.");
+        assertEquals(new Portal(), instance.portal(), "The portal should fall back to default.");
+        assertEquals(new User(), instance.user(), "The user should fall back to a default user instance.");
+    }
+
+    @Test
+    void resetInstance_ShouldClearSingletonInstance_WhenCalled() {
+        // Arrange
+        String environmentName = "QA";
+        String portalWeb = "MIASOFTNANUS_UI";
+        String userType = "GOOGLE";
+        String environmentFilePath = "./src/test/resources/EnvironmentUi.json";
+        EnvironmentUiManager initialInstance = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
+
+        // Act
+        EnvironmentUiManager.resetInstance();
+        EnvironmentUiManager newInstance = EnvironmentUiManager.getInstance(environmentName, portalWeb, userType, environmentFilePath);
+
+        // Assert
+        assertNotNull(initialInstance, "The initial instance should not be null.");
+        assertNotNull(newInstance, "The new instance should not be null.");
+        assertNotSame(initialInstance, newInstance, "A new instance should be created after resetInstance is called.");
     }
 }

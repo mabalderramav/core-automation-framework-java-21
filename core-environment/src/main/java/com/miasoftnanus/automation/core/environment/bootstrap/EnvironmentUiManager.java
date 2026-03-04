@@ -55,6 +55,18 @@ public class EnvironmentUiManager extends EnvironmentManager {
         this.user = getUser(userType);
     }
 
+    /**
+     * Resets the singleton instance of the {@code EnvironmentUiManager} class.
+     * <p>
+     * This method sets the static instance variable to {@code null}, allowing the {@link #getInstance(String, String, String, String)}
+     * method to create and return a new instance when invoked again. It is typically used in test scenarios or when a fresh
+     * instance is required.
+     * </p>
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+
     private User getUser(String userType) {
         return portal.users().stream()
                 .filter(userEnv -> userEnv.type().equalsIgnoreCase(userType))
