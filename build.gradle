@@ -1,7 +1,6 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "7.0.1.6134"
-    id 'jacoco'
 }
 
 group = 'com.miasoftnanus.automation.core'
@@ -16,17 +15,25 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
-jacocoTestReport {
-    reports {
-        xml.required = true // Crucial for SonarQube
-        html.required = true
-    }
-}
+subprojects {
+    apply plugin: 'jacoco'
+    apply plugin: 'org.sonarqube'
 
-sonarqube {
-    properties {
-        property "sonar.coverage.jacoco.xmlReportPaths",
-                layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml").map { it.asFile.absolutePath }.get()
+    tasks.withType(JacocoReport).configureEach {
+        reports {
+            xml.required = true
+        }
+    }
+
+    tasks.matching { it.name == 'sonar' }.configureEach {
+        dependsOn tasks.matching { it.name == 'jacocoTestReport' }
+    }
+
+    sonarqube {
+        properties {
+            property 'sonar.coverage.jacoco.xmlReportPaths',
+                    layout.buildDirectory.file("reports/jacoco/test/jacocoTestReport.xml").get().asFile.absolutePath
+        }
     }
 }
 
