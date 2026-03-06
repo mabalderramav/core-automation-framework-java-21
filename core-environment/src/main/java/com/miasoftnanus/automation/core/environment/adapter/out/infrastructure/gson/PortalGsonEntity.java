@@ -1,4 +1,4 @@
-package com.miasoftnanus.automation.core.environment.adapter.out.persistence.gson;
+package com.miasoftnanus.automation.core.environment.adapter.out.infrastructure.gson;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

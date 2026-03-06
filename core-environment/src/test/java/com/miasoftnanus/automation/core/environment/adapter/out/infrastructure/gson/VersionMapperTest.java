@@ -1,4 +1,4 @@
-package com.miasoftnanus.automation.core.environment.adapter.out.persistence.gson;
+package com.miasoftnanus.automation.core.environment.adapter.out.infrastructure.gson;
 
 import com.miasoftnanus.automation.core.environment.model.Version;
 import org.junit.jupiter.api.Test;
