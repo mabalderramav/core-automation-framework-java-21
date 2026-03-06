@@ -50,6 +50,9 @@ class PortalMapper {
      * The list excludes null values and ensures only valid portals are included.
      */
     static List<Portal> tolModel(final List<PortalGsonEntity> entities) {
+        if (entities == null) {
+            return List.of();
+        }
         return entities.stream()
                 .map(PortalMapper::tolModel)
                 .filter(Optional::isPresent)

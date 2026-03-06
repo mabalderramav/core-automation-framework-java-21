@@ -45,6 +45,7 @@ class EnvironmentMapper {
         final Environment model = new Environment();
         model.name(entity.name());
         model.portals(PortalMapper.tolModel(entity.portals()));
+        model.apis(ApiMapper.toApiModel(entity.apis()));
 
         return Optional.of(model);
     }

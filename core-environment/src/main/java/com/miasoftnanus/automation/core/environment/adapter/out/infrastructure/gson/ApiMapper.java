@@ -57,6 +57,9 @@ class ApiMapper {
      * The list excludes null values and ensures only valid APIs are included.
      */
     static List<Api> toApiModel(final List<ApiGsonEntity> entities) {
+        if (entities == null) {
+            return List.of();
+        }
         return entities.stream()
                 .map(ApiMapper::toApiModel)
                 .filter(Optional::isPresent)
