@@ -12,6 +12,7 @@ class UiConfigTest {
         // Act
         var uiConfig = UiConfigManager.getInstance().uiConfig();
         var environmentNameExpected = "QA";
+        var environmentFilePathExpected = "";
         var implicitTimeWaitExpected = 15;
         var explicitTimeWaitExpected = 15;
         var sleepWaitTimeExpected = 1;
@@ -23,6 +24,9 @@ class UiConfigTest {
         assertThat(uiConfig.environmentName())
                 .as("Environment name should be QA.")
                 .isEqualTo(environmentNameExpected);
+        assertThat(uiConfig.environmentFilePath())
+                .as("Environment file path should be empty.")
+                .isEqualTo(environmentFilePathExpected);
         assertThat(uiConfig.implicitTimeWait())
                 .as("Implicit time wait should be 15 seconds.")
                 .isEqualTo(implicitTimeWaitExpected);

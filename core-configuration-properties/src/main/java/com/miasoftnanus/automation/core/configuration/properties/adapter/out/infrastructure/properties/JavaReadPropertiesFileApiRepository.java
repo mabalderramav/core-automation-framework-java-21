@@ -22,6 +22,8 @@ public class JavaReadPropertiesFileApiRepository implements ReadPropertiesFileAp
         var propertiesFileReader = new PropertiesFileReader(propertyFilePath);
         var apiConfig = new ApiConfig();
         apiConfig.environmentName(propertiesFileReader.getPropertyValue(CommonConfigWords.ENVIRONMENT_NAME.val()));
+        apiConfig.environmentFilePath(
+                propertiesFileReader.getPropertyValue(CommonConfigWords.ENVIRONMENT_FILE_PATH.val()));
         apiConfig.apiName(propertiesFileReader.getPropertyValue(ApiConfigWords.API_NAME.val()));
         apiConfig.versionName(propertiesFileReader.getPropertyValue(ApiConfigWords.API_VERSION_NAME.val()));
         apiConfig.authenticationType(

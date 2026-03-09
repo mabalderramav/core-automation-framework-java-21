@@ -22,6 +22,8 @@ public class JavaReadPropertiesFileUiRepository implements ReadPropertiesFileUiR
         var propertiesFileReader = new PropertiesFileReader(propertyFilePath);
         var uiConfig = new UiConfig();
         uiConfig.environmentName(propertiesFileReader.getPropertyValue(CommonConfigWords.ENVIRONMENT_NAME.val()));
+        uiConfig.environmentFilePath(
+                propertiesFileReader.getPropertyValue(CommonConfigWords.ENVIRONMENT_FILE_PATH.val()));
         uiConfig.browser(propertiesFileReader.getPropertyValue(UiConfigWords.UI_BROWSER.val()));
         uiConfig.browserLogs(
                 Boolean.parseBoolean(propertiesFileReader.getPropertyValue(UiConfigWords.UI_BROWSER_LOGS.val())));

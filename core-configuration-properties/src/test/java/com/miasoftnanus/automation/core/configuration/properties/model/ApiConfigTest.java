@@ -12,6 +12,7 @@ class ApiConfigTest {
         // Act
         var apiConfig = ApiConfigManager.getInstance().apiConfig();
         var environmentExpected = "QA";
+        var environmentFilePathExpected = "";
         var apiNameExpected = "MTU-CONF";
         var versionNameExpected = "V1";
         var authenticationTypeExpected = "BASIC";
@@ -21,6 +22,9 @@ class ApiConfigTest {
         assertThat(apiConfig.environmentName())
                 .as("Environment name should be QA.")
                 .isEqualTo(environmentExpected);
+        assertThat(apiConfig.environmentFilePath())
+                .as("Environment file path should be empty.")
+                .isEqualTo(environmentFilePathExpected);
         assertThat(apiConfig.apiName())
                 .as("API name should be MTU-CONF.")
                 .isEqualTo(apiNameExpected);

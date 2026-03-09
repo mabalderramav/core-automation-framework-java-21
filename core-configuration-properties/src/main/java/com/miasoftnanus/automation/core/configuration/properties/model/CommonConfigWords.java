@@ -6,7 +6,8 @@ package com.miasoftnanus.automation.core.configuration.properties.model;
  * or hardcoding across the application.
  */
 public enum CommonConfigWords {
-    ENVIRONMENT_NAME("environmentName");
+    ENVIRONMENT_FILE_PATH("environment.filePath"),
+    ENVIRONMENT_NAME("environment.name");
 
     private final String word;
 

@@ -16,6 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public abstract class CommonConfig {
     protected String environmentName;
+    protected String environmentFilePath;
 
     /**
      * Constructs a new instance of the CommonConfig class and initializes the `environmentName` property.
@@ -25,5 +26,6 @@ public abstract class CommonConfig {
      */
     protected CommonConfig() {
         this.environmentName = "";
+        this.environmentFilePath = "";
     }
 }
