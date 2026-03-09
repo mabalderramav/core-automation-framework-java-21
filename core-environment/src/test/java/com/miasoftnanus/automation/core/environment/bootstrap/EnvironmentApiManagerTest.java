@@ -15,6 +15,23 @@ class EnvironmentApiManagerTest {
     }
 
     @Test
+    void testGetInstanceReturnsSingletonV2() {
+        String environmentName = "DEV";
+        String apiName = "MIASOFTNANUS_CONF";
+        String versionName = "V1";
+        String authenticationType = "BASIC";
+        String authenticationUserType = "API-AUTO";
+
+        EnvironmentApiManager instance1 = EnvironmentApiManager.getInstance(
+                environmentName, apiName, versionName, authenticationType, authenticationUserType);
+
+        EnvironmentApiManager instance2 = EnvironmentApiManager.getInstance(
+                environmentName, apiName, versionName, authenticationType, authenticationUserType);
+
+        Assertions.assertSame(instance1, instance2, "The two instances should be the same (singleton).");
+    }
+
+    @Test
     void testGetInstanceWithDefaultEnvironmentFilePath() {
         String environmentName = "DEV";
         String apiName = "MIASOFTNANUS_CONF";
