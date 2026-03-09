@@ -8,25 +8,46 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class EnvironmentApiManagerTest {
-
-    /**
-     * Cleans up the test environment by resetting the singleton instance
-     * of the EnvironmentApiManager after each test execution.
-     * <p>
-     * This ensures that the singleton state does not persist across tests,
-     * allowing each test to execute in isolation with a fresh instance of
-     * the EnvironmentApiManager.
-     * </p>
-     */
     @AfterEach
     void tearDown() {
         EnvironmentApiManager.resetInstance();
     }
 
-    /**
-     * Tests the singleton behavior of the getInstance method.
-     * Verifies that later calls return the same instance.
-     */
+        @Test
+    void testGetInstanceWithDefaultEnvironmentFilePath() {
+        String environmentName = "DEV";
+        String apiName = "MIASOFTNANUS_CONF";
+        String versionName = "V1";
+        String authenticationType = "BASIC";
+        String authenticationUserType = "API-AUTO";
+
+        EnvironmentApiManager instance = EnvironmentApiManager.getInstance(
+                environmentName, apiName, versionName, authenticationType, authenticationUserType
+        );
+
+        Assertions.assertNotNull(instance, "The instance should not be null.");
+        Assertions.assertEquals(environmentName, instance.environment().name(),
+                "Environment name should match the expected default environment.");
+    }
+
+    @Test
+    void testOverloadedGetInstanceWithoutFilePathInitializesCorrectly() {
+        String environmentName = "DEV";
+        String apiName = "MIASOFTNANUS_CONF";
+        String versionName = "V1";
+        String authenticationType = "BASIC";
+        String authenticationUserType = "DEFAULT_USER";
+
+        EnvironmentApiManager instance = EnvironmentApiManager.getInstance(
+                environmentName, apiName, versionName, authenticationType, authenticationUserType
+        );
+
+        Assertions.assertEquals(apiName, instance.apiName(), "API name should match the expected value.");
+        Assertions.assertEquals(versionName, instance.versionName(), "Version name should match the expected value.");
+        Assertions.assertEquals(authenticationType, instance.authenticationType(), "Authentication type should match the expected value.");
+        Assertions.assertEquals(authenticationUserType, instance.authenticationUserType(), "Authentication user type should match the expected value.");
+    }
+
     @Test
     void testGetInstanceReturnsSingleton() {
         String environmentName = "DEV";
@@ -47,10 +68,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertSame(instance1, instance2, "The two instances should be the same (singleton).");
     }
 
-    /**
-     * Tests the initialization of the EnvironmentApiManager with valid parameters.
-     * Ensures that the created instance contains the expected API, authentication, and user data.
-     */
     @Test
     void testInstanceInitializationWithValidData() {
         String environmentName = "DEV";
@@ -74,9 +91,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertNotNull(instance.version(), "The Version object should not be null.");
     }
 
-    /**
-     * Tests that getInstance correctly returns a default User object when no matching user type is found.
-     */
     @Test
     void testGetInstanceReturnsDefaultUserWhenNoMatch() {
         String environmentName = "QA";
@@ -97,9 +111,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertEquals("", user.password(), "Default User password should be an empty string.");
     }
 
-    /**
-     * Tests that getInstance correctly returns a default Authentication object when no match is found.
-     */
     @Test
     void testGetInstanceReturnsDefaultAuthenticationWhenNoMatch() {
         String environmentName = "QA";
@@ -118,9 +129,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertEquals("", authentication.type(), "Default Authentication type should be an empty string.");
     }
 
-    /**
-     * Tests that getInstance correctly returns a default Api object when no matching API is found.
-     */
     @Test
     void testGetInstanceReturnsDefaultApiWhenNoMatch() {
         String environmentName = "QA";
@@ -139,9 +147,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertEquals("", api.name(), "Default API name should be an empty string.");
     }
 
-    /**
-     * Tests that resetInstance clears the singleton instance.
-     */
     @Test
     void testResetInstanceClearsSingletonInstance() {
         String environmentName = "DEV";
@@ -164,9 +169,6 @@ class EnvironmentApiManagerTest {
         Assertions.assertNotSame(instance1, instance2, "After resetInstance, a new instance should be created.");
     }
 
-    /**
-     * Tests that resetInstance allows reinitialization with new parameters.
-     */
     @Test
     void testResetInstanceAllowsReinitializationWithNewParameters() {
         String environmentName1 = "DEV";

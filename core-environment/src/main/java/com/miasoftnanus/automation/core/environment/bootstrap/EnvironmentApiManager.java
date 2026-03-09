@@ -74,6 +74,33 @@ public class EnvironmentApiManager extends EnvironmentManager {
     }
 
     /**
+     * Constructs an instance of {@code EnvironmentApiManager} to manage API-specific configurations
+     * within a specified environment. This constructor initializes the necessary fields and retrieves
+     * API, version, authentication, and user details based on the provided parameters.
+     *
+     * @param environmentName        the name of the environment to be managed.
+     * @param apiName                the name of the API to retrieve and manage within the environment.
+     * @param versionName            the version of the API to be managed.
+     * @param authenticationType     the type of authentication to be used for API access.
+     * @param authenticationUserType the user type associated with the specified authentication mechanism.
+     */
+    private EnvironmentApiManager(final String environmentName,
+                                  final String apiName,
+                                  final String versionName,
+                                  final String authenticationType,
+                                  final String authenticationUserType) {
+        super(environmentName, EnvironmentManagerWords.API_ENVIRONMENT_JSON_FILE_PATH.val());
+        this.apiName = apiName;
+        this.versionName = versionName;
+        this.authenticationType = authenticationType;
+        this.authenticationUserType = authenticationUserType;
+        this.api = getApi(apiName);
+        this.authentication = getAuthentication(authenticationType);
+        this.user = getUser(authenticationUserType);
+        this.version = getVersion(versionName);
+    }
+
+    /**
      * Retrieves a {@code Version} object based on the specified version name.
      * This method filters the list of available versions and returns the first version
      * that matches the provided name (case-insensitive). If no match is found, a
@@ -82,7 +109,7 @@ public class EnvironmentApiManager extends EnvironmentManager {
      * @param versionName the name of the version to retrieve, used for filtering
      *                    the list of available versions.
      * @return the {@code Version} instance matching the specified name, or a
-     *         default {@code Version} instance if no match is found.
+     * default {@code Version} instance if no match is found.
      */
     private Version getVersion(final String versionName) {
         return api.versions().stream()
@@ -144,7 +171,7 @@ public class EnvironmentApiManager extends EnvironmentManager {
      * Resets the singleton instance of the {@code EnvironmentApiManager} to {@code null}.
      * This method is typically used to allow the reinitialization of the singleton instance
      * with new configuration parameters or to release the current instance for cleanup purposes.
-     *
+     * <p>
      * Note: Calling this method without reinitializing the instance using {@code getInstance}
      * may result in {@code NullPointerException} if other methods depending on the instance
      * are invoked afterward.
@@ -176,6 +203,30 @@ public class EnvironmentApiManager extends EnvironmentManager {
         if (Objects.isNull(instance)) {
             instance = new EnvironmentApiManager(environmentName, apiName, versionName, authenticationType,
                     authenticationUserType, environmentFilePath);
+        }
+
+        return instance;
+    }
+
+    /**
+     * Returns a singleton instance of the EnvironmentApiManager class. If the instance does not
+     * exist, it initializes the instance using the provided parameters.
+     *
+     * @param environmentName       the name of the environment for which the API manager is being used.
+     * @param apiName               the name of the API to be managed.
+     * @param versionName           the version of the API.
+     * @param authenticationType    the type of authentication required for API access.
+     * @param authenticationUserType the type of user authentication required for API access.
+     * @return the singleton instance of EnvironmentApiManager.
+     */
+    public static EnvironmentApiManager getInstance(final String environmentName,
+                                                    final String apiName,
+                                                    final String versionName,
+                                                    final String authenticationType,
+                                                    final String authenticationUserType) {
+        if (Objects.isNull(instance)) {
+            instance = new EnvironmentApiManager(environmentName, apiName, versionName, authenticationType,
+                    authenticationUserType);
         }
 
         return instance;

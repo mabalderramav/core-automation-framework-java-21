@@ -56,6 +56,29 @@ public class EnvironmentUiManager extends EnvironmentManager {
     }
 
     /**
+     * Constructs a new instance of the {@code EnvironmentUiManager} class, initializing the
+     * UI environment with the specified portal, user type, and environment name.
+     * <p>
+     * This constructor retrieves and assigns the associated portal and user objects
+     * based on the provided portal name and user type. It initializes the base
+     * environment configuration using the file path for UI environments.
+     * </p>
+     *
+     * @param environmentName the name of the environment to be managed.
+     * @param portalWeb       the name of the portal within the environment.
+     * @param userType        the type of user to be associated with the environment.
+     */
+    private EnvironmentUiManager(final String environmentName,
+                                 final String portalWeb,
+                                 final String userType) {
+        super(environmentName, EnvironmentManagerWords.UI_ENVIRONMENT_JSON_FILE_PATH.val());
+        this.portalWeb = portalWeb;
+        this.userType = userType;
+        this.portal = getPortal(portalWeb);
+        this.user = getUser(userType);
+    }
+
+    /**
      * Resets the singleton instance of the {@code EnvironmentUiManager} class.
      * <p>
      * This method sets the static instance variable to {@code null}, allowing the {@link #getInstance(String, String, String, String)}
@@ -97,6 +120,26 @@ public class EnvironmentUiManager extends EnvironmentManager {
                                                                 final String environmentFilePath) {
         if (Objects.isNull(instance)) {
             instance = new EnvironmentUiManager(environmentName, portalWeb, userType, environmentFilePath);
+        }
+
+        return instance;
+    }
+
+    /**
+     * Retrieves the singleton instance of the {@code EnvironmentUiManager} class.
+     * If an instance does not already exist, a new instance is created using
+     * the provided parameters.
+     *
+     * @param environmentName the name of the environment to be managed.
+     * @param portalWeb       the name of the portal within the environment.
+     * @param userType        the type of user to be associated with the environment.
+     * @return the singleton instance of {@code EnvironmentUiManager}.
+     */
+    public static synchronized EnvironmentUiManager getInstance(final String environmentName,
+                                                                final String portalWeb,
+                                                                final String userType) {
+        if (Objects.isNull(instance)) {
+            instance = new EnvironmentUiManager(environmentName, portalWeb, userType);
         }
 
         return instance;
