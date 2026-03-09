@@ -1,7 +1,7 @@
 package com.miasoftnanus.automation.core.environment.application.service;
 
 import com.miasoftnanus.automation.core.environment.application.port.in.ReadEnvironmentJsonFileUseCase;
-import com.miasoftnanus.automation.core.environment.application.port.out.persistence.ReadEnvironmentJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.port.out.infrastructure.ReadEnvironmentJsonFileRepository;
 import com.miasoftnanus.automation.core.environment.model.Environment;
 import lombok.RequiredArgsConstructor;
 

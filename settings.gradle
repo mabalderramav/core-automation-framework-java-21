@@ -1,3 +1,4 @@
 rootProject.name = 'core-automation-framework-java-21'
 include 'core-utils'
 include 'core-environment'
+include 'core-configuration-properties'

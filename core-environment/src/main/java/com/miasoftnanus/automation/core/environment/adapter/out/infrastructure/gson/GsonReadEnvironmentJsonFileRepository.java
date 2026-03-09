@@ -1,6 +1,6 @@
 package com.miasoftnanus.automation.core.environment.adapter.out.infrastructure.gson;
 
-import com.miasoftnanus.automation.core.environment.application.port.out.persistence.ReadEnvironmentJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.port.out.infrastructure.ReadEnvironmentJsonFileRepository;
 import com.miasoftnanus.automation.core.environment.model.Environment;
 
 import java.util.List;

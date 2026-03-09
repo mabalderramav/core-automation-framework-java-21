@@ -1,4 +1,4 @@
-package com.miasoftnanus.automation.core.environment.application.port.out.persistence;
+package com.miasoftnanus.automation.core.environment.application.port.out.infrastructure;
 
 import com.miasoftnanus.automation.core.environment.model.Environment;
 
