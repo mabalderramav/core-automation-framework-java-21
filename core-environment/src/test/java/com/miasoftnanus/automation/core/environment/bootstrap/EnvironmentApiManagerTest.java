@@ -6,6 +6,7 @@ import com.miasoftnanus.automation.core.environment.model.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 class EnvironmentApiManagerTest {
     @AfterEach
@@ -13,7 +14,7 @@ class EnvironmentApiManagerTest {
         EnvironmentApiManager.resetInstance();
     }
 
-        @Test
+    @Test
     void testGetInstanceWithDefaultEnvironmentFilePath() {
         String environmentName = "DEV";
         String apiName = "MIASOFTNANUS_CONF";
@@ -201,5 +202,55 @@ class EnvironmentApiManagerTest {
         Assertions.assertEquals(versionName2, instance2.versionName(), "Version name should match the new parameters.");
         Assertions.assertEquals(authenticationType2, instance2.authenticationType(), "Authentication type should match the new parameters.");
         Assertions.assertEquals(authenticationUserType2, instance2.authenticationUserType(), "Authentication user type should match the new parameters.");
+    }
+
+    @Test
+    void testGetInstanceWithFilePathDoesNotReinitializeWhenInstanceAlreadyExists() {
+        String environmentName1 = "DEV";
+        String apiName1 = "MIASOFTNANUS_CONF";
+        String versionName1 = "V1";
+        String authenticationType1 = "BASIC";
+        String authenticationUserType1 = "API-AUTO";
+        String environmentFilePath1 = "./src/test/resources/EnvironmentApi.json";
+
+        EnvironmentApiManager instance1 = EnvironmentApiManager.getInstance(
+                environmentName1, apiName1, versionName1, authenticationType1, authenticationUserType1, environmentFilePath1
+        );
+
+        // Call again with different params — singleton should still return the original instance
+        String environmentName2 = "QA";
+        String apiName2 = "DIFFERENT_API";
+        String versionName2 = "V2";
+        String authenticationType2 = "TOKEN";
+        String authenticationUserType2 = "DIFFERENT_USER_TYPE";
+        String environmentFilePath2 = "./src/test/resources/EnvironmentApi.json";
+
+        EnvironmentApiManager instance2 = EnvironmentApiManager.getInstance(
+                environmentName2, apiName2, versionName2, authenticationType2, authenticationUserType2, environmentFilePath2
+        );
+
+        Assertions.assertSame(instance1, instance2, "Should return the same singleton instance.");
+        // Ensure it kept the first initialization values
+        Assertions.assertEquals(apiName1, instance2.apiName(), "API name should remain the one from the first initialization.");
+        Assertions.assertEquals(versionName1, instance2.versionName(), "Version name should remain the one from the first initialization.");
+        Assertions.assertEquals(authenticationType1, instance2.authenticationType(), "Authentication type should remain the one from the first initialization.");
+        Assertions.assertEquals(authenticationUserType1, instance2.authenticationUserType(), "Authentication user type should remain the one from the first initialization.");
+    }
+
+    @Test
+    void testGetInstanceWithInvalidFilePathThrowsException() {
+        String environmentName = "DEV";
+        String apiName = "MIASOFTNANUS_CONF";
+        String versionName = "V1";
+        String authenticationType = "BASIC";
+        String authenticationUserType = "API-AUTO";
+        String invalidEnvironmentFilePath = "./src/test/resources/does-not-exist.json";
+
+        Executable call = () -> EnvironmentApiManager.getInstance(
+                environmentName, apiName, versionName, authenticationType, authenticationUserType, invalidEnvironmentFilePath
+        );
+
+        Assertions.assertThrows(RuntimeException.class, call,
+                "An invalid environment file path should cause initialization to fail.");
     }
 }
