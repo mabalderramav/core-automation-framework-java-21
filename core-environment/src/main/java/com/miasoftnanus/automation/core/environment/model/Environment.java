@@ -3,8 +3,6 @@ package com.miasoftnanus.automation.core.environment.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 /**
  * Represents an environment containing a collection of portals and APIs.
  * <p>
