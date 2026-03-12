@@ -33,7 +33,7 @@ class EnvironmentUiMapper {
      * Converts an {@link EnvironmentUiGsonEntity} object to an {@link Optional} containing an {@link EnvironmentUi} model object.
      * If the input entity is null, an empty {@link Optional} is returned.
      *
-     * @param entity the {@link EnvironmentUiGsonEntity} object to be converted. May be null.
+     * @param entity the {@link EnvironmentUiGsonEntity} object to be converted. Maybe null.
      * @return an {@link Optional} containing the converted {@link EnvironmentUi} model object,
      *         or an empty {@link Optional} if the input entity is null.
      */
