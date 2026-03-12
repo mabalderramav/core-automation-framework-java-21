@@ -44,7 +44,7 @@ class EnvironmentApiManagerTest {
         );
 
         Assertions.assertNotNull(instance, "The instance should not be null.");
-        Assertions.assertEquals(environmentName, instance.environment().name(),
+        Assertions.assertEquals(environmentName, instance.environmentApi().name(),
                 "Environment name should match the expected default environment.");
     }
 

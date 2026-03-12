@@ -113,6 +113,7 @@ class EnvironmentUiManagerTest {
         assertSame(instance1, instance2, "The singleton instances should be the same.");
         assertEquals(portalWeb, instance1.portalWeb(), "The portalWeb should match the assigned value.");
         assertEquals(userType, instance1.userType(), "The userType should match the assigned value.");
+        assertEquals(environmentName, instance1.environmentUi().name(), "The environmentName should match the assigned value.");
     }
 
     @Test

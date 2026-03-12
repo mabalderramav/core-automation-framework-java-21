@@ -1,14 +1,22 @@
 package com.miasoftnanus.automation.core.environment.bootstrap;
 
+import com.miasoftnanus.automation.core.environment.adapter.in.controller.ReadEnvironmentApiJsonFileController;
+import com.miasoftnanus.automation.core.environment.adapter.out.infrastructure.gson.GsonReadEnvironmentApiJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.port.in.ReadEnvironmentApiJsonFileUseCase;
+import com.miasoftnanus.automation.core.environment.application.port.out.infrastructure.ReadEnvironmentApiJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.service.ReadEnvironmentApiJsonFileService;
 import com.miasoftnanus.automation.core.environment.model.Api;
 import com.miasoftnanus.automation.core.environment.model.Authentication;
+import com.miasoftnanus.automation.core.environment.model.EnvironmentApi;
 import com.miasoftnanus.automation.core.environment.model.User;
 import com.miasoftnanus.automation.core.environment.model.Version;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
 import java.util.Objects;
+
+import static com.miasoftnanus.automation.core.environment.bootstrap.EnvironmentManagerWords.API_ENVIRONMENT_JSON_FILE_PATH;
 
 /**
  * Manages the configuration and initialization of an API within a specific environment.
@@ -33,17 +41,18 @@ import java.util.Objects;
  */
 @Data
 @Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
-public class EnvironmentApiManager extends EnvironmentManager {
+public class EnvironmentApiManager {
     private static EnvironmentApiManager instance;
-    private final String apiName;
-    private final String versionName;
-    private final String authenticationType;
-    private final String authenticationUserType;
-    private final Api api;
-    private final Authentication authentication;
-    private final User user;
-    private final Version version;
+    private List<EnvironmentApi> environmentApis;
+    private EnvironmentApi environmentApi;
+    private String apiName;
+    private String versionName;
+    private String authenticationType;
+    private String authenticationUserType;
+    private Api api;
+    private Authentication authentication;
+    private User user;
+    private Version version;
 
     /**
      * Initializes a new instance of the {@code EnvironmentApiManager} class, which manages
@@ -62,15 +71,7 @@ public class EnvironmentApiManager extends EnvironmentManager {
                                   final String authenticationType,
                                   final String authenticationUserType,
                                   final String environmentFilePath) {
-        super(environmentName, environmentFilePath);
-        this.apiName = apiName;
-        this.versionName = versionName;
-        this.authenticationType = authenticationType;
-        this.authenticationUserType = authenticationUserType;
-        this.api = getApi(apiName);
-        this.authentication = getAuthentication(authenticationType);
-        this.user = getUser(authenticationUserType);
-        this.version = getVersion(versionName);
+        init(environmentName, apiName, versionName, authenticationType, authenticationUserType, environmentFilePath);
     }
 
     /**
@@ -89,7 +90,27 @@ public class EnvironmentApiManager extends EnvironmentManager {
                                   final String versionName,
                                   final String authenticationType,
                                   final String authenticationUserType) {
-        super(environmentName, EnvironmentManagerWords.API_ENVIRONMENT_JSON_FILE_PATH.val());
+        init(environmentName, apiName, versionName, authenticationType, authenticationUserType,
+                API_ENVIRONMENT_JSON_FILE_PATH.val());
+    }
+
+    private void init(final String environmentName,
+                      final String apiName,
+                      final String versionName,
+                      final String authenticationType,
+                      final String authenticationUserType,
+                      final String environmentFilePath) {
+        ReadEnvironmentApiJsonFileRepository readEnvironmentApiJsonFileRepository =
+                new GsonReadEnvironmentApiJsonFileRepository();
+        ReadEnvironmentApiJsonFileUseCase readEnvironmentApiJsonFileUseCase =
+                new ReadEnvironmentApiJsonFileService(readEnvironmentApiJsonFileRepository);
+        ReadEnvironmentApiJsonFileController readEnvironmentApiJsonFileController =
+                new ReadEnvironmentApiJsonFileController(readEnvironmentApiJsonFileUseCase);
+        this.environmentApis = readEnvironmentApiJsonFileController.readJsonFile(environmentFilePath);
+        this.environmentApi = environmentApis.stream()
+                .filter(env -> env.name().equalsIgnoreCase(environmentName))
+                .findFirst()
+                .orElse(new EnvironmentApi());
         this.apiName = apiName;
         this.versionName = versionName;
         this.authenticationType = authenticationType;
@@ -161,7 +182,7 @@ public class EnvironmentApiManager extends EnvironmentManager {
      * if no match is found.
      */
     private Api getApi(final String apiName) {
-        return environment.apis().stream()
+        return environmentApi.apis().stream()
                 .filter(apiEnv -> apiEnv.name().equalsIgnoreCase(apiName))
                 .findFirst()
                 .orElse(new Api());
@@ -212,10 +233,10 @@ public class EnvironmentApiManager extends EnvironmentManager {
      * Returns a singleton instance of the EnvironmentApiManager class. If the instance does not
      * exist, it initializes the instance using the provided parameters.
      *
-     * @param environmentName       the name of the environment for which the API manager is being used.
-     * @param apiName               the name of the API to be managed.
-     * @param versionName           the version of the API.
-     * @param authenticationType    the type of authentication required for API access.
+     * @param environmentName        the name of the environment for which the API manager is being used.
+     * @param apiName                the name of the API to be managed.
+     * @param versionName            the version of the API.
+     * @param authenticationType     the type of authentication required for API access.
      * @param authenticationUserType the type of user authentication required for API access.
      * @return the singleton instance of EnvironmentApiManager.
      */

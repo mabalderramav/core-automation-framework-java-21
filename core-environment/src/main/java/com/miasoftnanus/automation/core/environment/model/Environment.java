@@ -15,18 +15,14 @@ import java.util.List;
  */
 @Data
 @Accessors(fluent = true)
-public class Environment {
+public abstract class Environment {
 
-    private String name;
-    private List<Portal> portals;
-    private List<Api> apis;
+    protected String name;
 
     /**
      * Initializes an instance of {@link Environment}.
      */
-    public Environment() {
+    protected Environment() {
         this.name = ReservedWords.EMPTY_STRING.val();
-        this.portals = List.of();
-        this.apis = List.of();
     }
 }

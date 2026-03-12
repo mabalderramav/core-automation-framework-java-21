@@ -1,12 +1,20 @@
 package com.miasoftnanus.automation.core.environment.bootstrap;
 
+import com.miasoftnanus.automation.core.environment.adapter.in.controller.ReadEnvironmentUiJsonFileController;
+import com.miasoftnanus.automation.core.environment.adapter.out.infrastructure.gson.GsonReadEnvironmentUiJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.port.in.ReadEnvironmentUiJsonFileUseCase;
+import com.miasoftnanus.automation.core.environment.application.port.out.infrastructure.ReadEnvironmentUiJsonFileRepository;
+import com.miasoftnanus.automation.core.environment.application.service.ReadEnvironmentUiJsonFileService;
+import com.miasoftnanus.automation.core.environment.model.EnvironmentUi;
 import com.miasoftnanus.automation.core.environment.model.Portal;
 import com.miasoftnanus.automation.core.environment.model.User;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
 import java.util.Objects;
+
+import static com.miasoftnanus.automation.core.environment.bootstrap.EnvironmentManagerWords.UI_ENVIRONMENT_JSON_FILE_PATH;
 
 /**
  * Manages the UI environment configuration and provides access to details such as the portal,
@@ -21,13 +29,14 @@ import java.util.Objects;
  */
 @Data
 @Accessors(fluent = true)
-@EqualsAndHashCode(callSuper = true)
-public class EnvironmentUiManager extends EnvironmentManager {
+public class EnvironmentUiManager {
     private static EnvironmentUiManager instance;
-    private final User user;
-    private final Portal portal;
-    private final String portalWeb;
-    private final String userType;
+    private List<EnvironmentUi> environmentUis;
+    private EnvironmentUi environmentUi;
+    private User user;
+    private Portal portal;
+    private String portalWeb;
+    private String userType;
 
     /**
      * Constructs a new instance of the {@code UiEnvironmentManager} class, initializing the
@@ -48,11 +57,7 @@ public class EnvironmentUiManager extends EnvironmentManager {
                                  final String portalWeb,
                                  final String userType,
                                  final String environmentFilePath) {
-        super(environmentName, environmentFilePath);
-        this.portalWeb = portalWeb;
-        this.userType = userType;
-        this.portal = getPortal(portalWeb);
-        this.user = getUser(userType);
+        init(environmentName, portalWeb, userType, environmentFilePath);
     }
 
     /**
@@ -71,7 +76,24 @@ public class EnvironmentUiManager extends EnvironmentManager {
     private EnvironmentUiManager(final String environmentName,
                                  final String portalWeb,
                                  final String userType) {
-        super(environmentName, EnvironmentManagerWords.UI_ENVIRONMENT_JSON_FILE_PATH.val());
+        init(environmentName, portalWeb, userType, UI_ENVIRONMENT_JSON_FILE_PATH.val());
+    }
+
+    private void init(final String environmentName,
+                      final String portalWeb,
+                      final String userType,
+                      final String environmentFilePath) {
+        ReadEnvironmentUiJsonFileRepository readEnvironmentUiJsonFileRepository =
+                new GsonReadEnvironmentUiJsonFileRepository();
+        ReadEnvironmentUiJsonFileUseCase readEnvironmentUiJsonFileUseCase =
+                new ReadEnvironmentUiJsonFileService(readEnvironmentUiJsonFileRepository);
+        ReadEnvironmentUiJsonFileController readEnvironmentUiJsonFileController =
+                new ReadEnvironmentUiJsonFileController(readEnvironmentUiJsonFileUseCase);
+        this.environmentUis = readEnvironmentUiJsonFileController.readJsonFile(environmentFilePath);
+        this.environmentUi = environmentUis.stream()
+                .filter(env -> env.name().equalsIgnoreCase(environmentName))
+                .findFirst()
+                .orElse(new EnvironmentUi());
         this.portalWeb = portalWeb;
         this.userType = userType;
         this.portal = getPortal(portalWeb);
@@ -98,7 +120,7 @@ public class EnvironmentUiManager extends EnvironmentManager {
     }
 
     private Portal getPortal(String portalWeb) {
-        return environment.portals().stream()
+        return environmentUi.portals().stream()
                 .filter(portalEnv -> portalEnv.name().equalsIgnoreCase(portalWeb))
                 .findFirst()
                 .orElse(new Portal());
