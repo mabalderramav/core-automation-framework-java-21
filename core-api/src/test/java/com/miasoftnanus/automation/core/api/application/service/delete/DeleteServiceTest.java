@@ -1,6 +1,6 @@
 package com.miasoftnanus.automation.core.api.application.service.delete;
 
-import com.miasoftnanus.automation.core.api.application.port.out.persistence.DeleteRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.DeleteRepository;
 import com.miasoftnanus.automation.core.api.model.ApiRequest;
 import com.miasoftnanus.automation.core.api.model.ApiResponse;
 import org.junit.jupiter.api.Test;

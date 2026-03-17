@@ -1,7 +1,7 @@
 package com.miasoftnanus.automation.core.api.application.service.put;
 
 import com.miasoftnanus.automation.core.api.application.port.in.put.PutUseCase;
-import com.miasoftnanus.automation.core.api.application.port.out.persistence.PutRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 import com.miasoftnanus.automation.core.api.model.ApiRequest;
 import com.miasoftnanus.automation.core.api.model.ApiResponse;
 import lombok.RequiredArgsConstructor;
