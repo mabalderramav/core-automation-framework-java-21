@@ -27,7 +27,7 @@ public abstract class ClientRequestManager {
      * using RestAssured-based implementations.
      * <p>
      * This constructor is protected to ensure that the class cannot be directly instantiated
-     * outside its class hierarchy, enforcing the singleton pattern for managing API requests.
+     * from outside its inheritance hierarchy and is intended to be used via concrete subclasses.
      * The class dependencies are encapsulated within specific repository implementations,
      * enabling the delegation of HTTP request operations for respective use cases.
      * </p>

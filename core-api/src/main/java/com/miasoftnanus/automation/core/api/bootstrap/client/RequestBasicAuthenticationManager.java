@@ -12,7 +12,7 @@ import com.miasoftnanus.automation.core.api.model.BasicAuthentication;
  * requests with basic authentication to specified endpoints. It supports
  * sending requests with different types of payloads, such as form data and
  * form parameters.
- * <p>
+ * </p>
  */
 public interface RequestBasicAuthenticationManager {
     /**

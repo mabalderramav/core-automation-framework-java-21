@@ -33,7 +33,7 @@ import com.miasoftnanus.automation.core.api.model.BasicAuthentication;
  * <p>
  * The class delegates the authentication-specific logic for various HTTP methods to respective
  * use cases and controllers, ensuring a clear separation of concerns and modularity.
- * <p>
+ * </p>
  * <p>
  * This class implements the {@code RequestBasicAuthenticationManager} interface to align with
  * a predefined contract for handling Basic Authentication in client-side API requests.
