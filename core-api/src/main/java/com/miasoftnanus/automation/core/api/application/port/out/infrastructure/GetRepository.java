@@ -1,4 +1,4 @@
-package com.miasoftnanus.automation.core.api.application.port.out.persistence;
+package com.miasoftnanus.automation.core.api.application.port.out.infrastructure;
 
 import com.miasoftnanus.automation.core.api.model.ApiRequest;
 import com.miasoftnanus.automation.core.api.model.ApiResponse;

@@ -1,6 +1,6 @@
 package com.miasoftnanus.automation.core.api.application.service.post;
 
-import com.miasoftnanus.automation.core.api.application.port.out.persistence.PostRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
 import com.miasoftnanus.automation.core.api.model.ApiRequest;
 import com.miasoftnanus.automation.core.api.model.ApiResponse;
 import com.miasoftnanus.automation.core.api.model.BasicAuthentication;
