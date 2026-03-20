@@ -9,6 +9,10 @@ import com.miasoftnanus.automation.core.api.adapter.in.rest.put.PutBasicAuthenti
 import com.miasoftnanus.automation.core.api.adapter.in.rest.put.PutFormDataBasicAuthenticationController;
 import com.miasoftnanus.automation.core.api.application.service.delete.DeleteBasicAuthenticationService;
 import com.miasoftnanus.automation.core.api.application.service.get.GetBasicAuthenticationService;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.DeleteRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.GetRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 import com.miasoftnanus.automation.core.api.application.service.post.PostBasicAuthenticationService;
 import com.miasoftnanus.automation.core.api.application.service.post.PostFormDataBasicAuthenticationService;
 import com.miasoftnanus.automation.core.api.application.service.post.PostFormParamsBasicAuthenticationService;
@@ -25,8 +29,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -170,6 +176,218 @@ class ClientRequestBasicAuthenticationManagerTest {
                 DeleteBasicAuthenticationController::deleteBasicAuthentication,
                 ClientRequestBasicAuthenticationManager::delete
         );
+    }
+
+    @Test
+    void get_withInjectedRepositories_usesInjectedGetRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(200, "get-response");
+        when(getRepository.getBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.get(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(getRepository).getBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(getRepository);
+        verifyNoInteractions(deleteRepository, postRepository, putRepository);
+    }
+
+    @Test
+    void post_withInjectedRepositories_usesInjectedPostRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(201, "post-response");
+        when(postRepository.postBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.post(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(postRepository).postBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(postRepository);
+        verifyNoInteractions(deleteRepository, getRepository, putRepository);
+    }
+
+    @Test
+    void postFormData_withInjectedRepositories_usesInjectedPostRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(201, "post-form-data-response");
+        when(postRepository.postFormDataBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.postFormData(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(postRepository).postFormDataBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(postRepository);
+        verifyNoInteractions(deleteRepository, getRepository, putRepository);
+    }
+
+    @Test
+    void postFormParams_withInjectedRepositories_usesInjectedPostRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(201, "post-form-params-response");
+        when(postRepository.postFormParamsBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.postFormParams(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(postRepository).postFormParamsBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(postRepository);
+        verifyNoInteractions(deleteRepository, getRepository, putRepository);
+    }
+
+    @Test
+    void put_withInjectedRepositories_usesInjectedPutRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(200, "put-response");
+        when(putRepository.putBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.put(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(putRepository).putBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(putRepository);
+        verifyNoInteractions(deleteRepository, getRepository, postRepository);
+    }
+
+    @Test
+    void putFormData_withInjectedRepositories_usesInjectedPutRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(200, "put-form-data-response");
+        when(putRepository.putFormDataBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.putFormData(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(putRepository).putFormDataBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(putRepository);
+        verifyNoInteractions(deleteRepository, getRepository, postRepository);
+    }
+
+    @Test
+    void delete_withInjectedRepositories_usesInjectedDeleteRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        BasicAuthentication basicAuthentication = new BasicAuthentication("user", "pass");
+        ApiResponse expected = new ApiResponse(204, "delete-response");
+        when(deleteRepository.deleteBasicAuthentication(apiRequest, endpoint, basicAuthentication)).thenReturn(expected);
+
+        ClientRequestBasicAuthenticationManager manager =
+                new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.delete(apiRequest, endpoint, basicAuthentication);
+
+        assertThat(actual).isSameAs(expected);
+        verify(deleteRepository).deleteBasicAuthentication(apiRequest, endpoint, basicAuthentication);
+        verifyNoMoreInteractions(deleteRepository);
+        verifyNoInteractions(getRepository, postRepository, putRepository);
+    }
+
+    @Test
+    void constructor_withNullDeleteRepository_throwsNullPointerException() {
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(null, getRepository, postRepository, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("deleteRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullGetRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, null, postRepository, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("getRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullPostRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, null, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("postRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullPutRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("putRepository must not be null");
     }
 
     private <C> void assertDelegationSuccess(final Class<C> controllerClass,

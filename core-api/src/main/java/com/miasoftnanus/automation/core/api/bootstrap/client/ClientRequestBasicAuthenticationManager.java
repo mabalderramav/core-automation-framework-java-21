@@ -14,6 +14,10 @@ import com.miasoftnanus.automation.core.api.application.port.in.post.PostFormDat
 import com.miasoftnanus.automation.core.api.application.port.in.post.PostFormParamsBasicAuthenticationUseCase;
 import com.miasoftnanus.automation.core.api.application.port.in.put.PutBasicAuthenticationUseCase;
 import com.miasoftnanus.automation.core.api.application.port.in.put.PutFormDataBasicAuthenticationUseCase;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.DeleteRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.GetRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 import com.miasoftnanus.automation.core.api.application.service.delete.DeleteBasicAuthenticationService;
 import com.miasoftnanus.automation.core.api.application.service.get.GetBasicAuthenticationService;
 import com.miasoftnanus.automation.core.api.application.service.post.PostBasicAuthenticationService;
@@ -57,6 +61,23 @@ public class ClientRequestBasicAuthenticationManager extends ClientRequestManage
      */
     public ClientRequestBasicAuthenticationManager() {
         super();
+    }
+
+    /**
+     * Constructs a new instance of the {@code ClientRequestBasicAuthenticationManager} class.
+     * This constructor initializes the manager with the provided repository instances to perform
+     * HTTP operations (GET, POST, PUT, DELETE) with basic authentication support.
+     *
+     * @param deleteRepository the repository for handling HTTP DELETE requests.
+     * @param getRepository    the repository for handling HTTP GET requests.
+     * @param postRepository   the repository for handling HTTP POST requests.
+     * @param putRepository    the repository for handling HTTP PUT requests.
+     */
+    public ClientRequestBasicAuthenticationManager(final DeleteRepository deleteRepository,
+                                            final GetRepository getRepository,
+                                            final PostRepository postRepository,
+                                            final PutRepository putRepository) {
+        super(deleteRepository, getRepository, postRepository, putRepository);
     }
 
     /**

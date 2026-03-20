@@ -8,6 +8,10 @@ import com.miasoftnanus.automation.core.api.application.port.in.delete.DeleteUse
 import com.miasoftnanus.automation.core.api.application.port.in.get.GetUseCase;
 import com.miasoftnanus.automation.core.api.application.port.in.post.PostUseCase;
 import com.miasoftnanus.automation.core.api.application.port.in.put.PutUseCase;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.DeleteRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.GetRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 import com.miasoftnanus.automation.core.api.application.service.delete.DeleteService;
 import com.miasoftnanus.automation.core.api.application.service.get.GetService;
 import com.miasoftnanus.automation.core.api.application.service.post.PostService;
@@ -23,9 +27,11 @@ import com.miasoftnanus.automation.core.api.model.ApiResponse;
  * The responsibility of this class is to delegate the execution of API operations to the appropriate
  * use case and controller classes using repository patterns. Since authentication is not required,
  * this manager focuses on handling requests without adding any authentication headers or tokens.
+ * </p>
  * <p>
  * All HTTP operations are carried out using the respective service and controller layers, ensuring
  * modularity, separation of concerns, and scalability when integrating with API endpoints.
+ * </p>
  */
 public class ClientWithoutAuthenticationRequestManager extends ClientRequestManager implements RequestManager {
 
@@ -39,10 +45,30 @@ public class ClientWithoutAuthenticationRequestManager extends ClientRequestMana
      * The constructor invokes the superclass constructor to initialize the repositories
      * for executing HTTP requests. As authentication is not required in this manager,
      * no additional request headers or tokens are added.
-     * <p>
+     * </p>
      */
     public ClientWithoutAuthenticationRequestManager() {
         super();
+    }
+
+    /**
+     * Constructs a new instance of {@code ClientWithoutAuthenticationRequestManager}.
+     * <p>
+     * This constructor initializes the manager with the repositories responsible for handling
+     * DELETE, GET, POST, and PUT HTTP requests. It leverages the provided repository implementations
+     * to allow API communications without requiring authentication.
+     * </p>
+     *
+     * @param deleteRepository the repository used for executing DELETE requests.
+     * @param getRepository the repository used for executing GET requests.
+     * @param postRepository the repository used for executing POST requests.
+     * @param putRepository the repository used for executing PUT requests.
+     */
+    public ClientWithoutAuthenticationRequestManager(final DeleteRepository deleteRepository,
+                                              final GetRepository getRepository,
+                                              final PostRepository postRepository,
+                                              final PutRepository putRepository) {
+        super(deleteRepository, getRepository, postRepository, putRepository);
     }
 
     /**
