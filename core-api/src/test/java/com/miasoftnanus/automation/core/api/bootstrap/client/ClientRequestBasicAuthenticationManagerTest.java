@@ -346,6 +346,50 @@ class ClientRequestBasicAuthenticationManagerTest {
         verifyNoInteractions(getRepository, postRepository, putRepository);
     }
 
+    @Test
+    void constructor_withNullDeleteRepository_throwsNullPointerException() {
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(null, getRepository, postRepository, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("deleteRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullGetRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, null, postRepository, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("getRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullPostRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, null, putRepository))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("postRepository must not be null");
+    }
+
+    @Test
+    void constructor_withNullPutRepository_throwsNullPointerException() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+
+        assertThatThrownBy(() -> new ClientRequestBasicAuthenticationManager(deleteRepository, getRepository, postRepository, null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("putRepository must not be null");
+    }
+
     private <C> void assertDelegationSuccess(final Class<C> controllerClass,
                                              final Class<?> expectedUseCaseClass,
                                              final ControllerInvocation<C> controllerInvocation,
