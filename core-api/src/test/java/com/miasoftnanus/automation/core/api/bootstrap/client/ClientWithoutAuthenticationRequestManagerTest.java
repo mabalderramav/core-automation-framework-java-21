@@ -4,6 +4,10 @@ import com.miasoftnanus.automation.core.api.adapter.in.rest.delete.DeleteControl
 import com.miasoftnanus.automation.core.api.adapter.in.rest.get.GetController;
 import com.miasoftnanus.automation.core.api.adapter.in.rest.post.PostController;
 import com.miasoftnanus.automation.core.api.adapter.in.rest.put.PutController;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.DeleteRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.GetRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
+import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 import com.miasoftnanus.automation.core.api.application.service.delete.DeleteService;
 import com.miasoftnanus.automation.core.api.application.service.get.GetService;
 import com.miasoftnanus.automation.core.api.application.service.post.PostService;
@@ -18,8 +22,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -103,6 +109,98 @@ class ClientWithoutAuthenticationRequestManagerTest {
                 DeleteController::delete,
                 ClientWithoutAuthenticationRequestManager::delete
         );
+    }
+
+    @Test
+    void get_withInjectedRepositories_usesInjectedGetRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        ApiResponse expected = new ApiResponse(200, "get-response");
+        when(getRepository.get(apiRequest, endpoint)).thenReturn(expected);
+
+        ClientWithoutAuthenticationRequestManager manager =
+                new ClientWithoutAuthenticationRequestManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.get(apiRequest, endpoint);
+
+        assertThat(actual).isSameAs(expected);
+        verify(getRepository).get(apiRequest, endpoint);
+        verifyNoMoreInteractions(getRepository);
+        verifyNoInteractions(deleteRepository, postRepository, putRepository);
+    }
+
+    @Test
+    void post_withInjectedRepositories_usesInjectedPostRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        ApiResponse expected = new ApiResponse(201, "post-response");
+        when(postRepository.post(apiRequest, endpoint)).thenReturn(expected);
+
+        ClientWithoutAuthenticationRequestManager manager =
+                new ClientWithoutAuthenticationRequestManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.post(apiRequest, endpoint);
+
+        assertThat(actual).isSameAs(expected);
+        verify(postRepository).post(apiRequest, endpoint);
+        verifyNoMoreInteractions(postRepository);
+        verifyNoInteractions(deleteRepository, getRepository, putRepository);
+    }
+
+    @Test
+    void put_withInjectedRepositories_usesInjectedPutRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        ApiResponse expected = new ApiResponse(200, "put-response");
+        when(putRepository.put(apiRequest, endpoint)).thenReturn(expected);
+
+        ClientWithoutAuthenticationRequestManager manager =
+                new ClientWithoutAuthenticationRequestManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.put(apiRequest, endpoint);
+
+        assertThat(actual).isSameAs(expected);
+        verify(putRepository).put(apiRequest, endpoint);
+        verifyNoMoreInteractions(putRepository);
+        verifyNoInteractions(deleteRepository, getRepository, postRepository);
+    }
+
+    @Test
+    void delete_withInjectedRepositories_usesInjectedDeleteRepository() {
+        DeleteRepository deleteRepository = mock(DeleteRepository.class);
+        GetRepository getRepository = mock(GetRepository.class);
+        PostRepository postRepository = mock(PostRepository.class);
+        PutRepository putRepository = mock(PutRepository.class);
+
+        ApiRequest apiRequest = new ApiRequest();
+        String endpoint = "/resource";
+        ApiResponse expected = new ApiResponse(204, "delete-response");
+        when(deleteRepository.delete(apiRequest, endpoint)).thenReturn(expected);
+
+        ClientWithoutAuthenticationRequestManager manager =
+                new ClientWithoutAuthenticationRequestManager(deleteRepository, getRepository, postRepository, putRepository);
+
+        ApiResponse actual = manager.delete(apiRequest, endpoint);
+
+        assertThat(actual).isSameAs(expected);
+        verify(deleteRepository).delete(apiRequest, endpoint);
+        verifyNoMoreInteractions(deleteRepository);
+        verifyNoInteractions(getRepository, postRepository, putRepository);
     }
 
     private <C> void assertDelegationSuccess(final Class<C> controllerClass,

@@ -38,4 +38,24 @@ public abstract class ClientRequestManager {
         postRepository = new RestAssuredPostRepository();
         putRepository = new RestAssuredPutRepository();
     }
+
+    /**
+     * Constructs a new instance of the {@code ClientRequestManager} class.
+     * Initializes the repositories for handling HTTP methods (GET, POST, PUT, DELETE),
+     * enabling modular and reusable request operations.
+     *
+     * @param deleteRepository the repository responsible for sending DELETE requests.
+     * @param getRepository the repository responsible for sending GET requests.
+     * @param postRepository the repository responsible for sending POST requests.
+     * @param putRepository the repository responsible for sending PUT requests.
+     */
+    protected ClientRequestManager(final DeleteRepository deleteRepository,
+                               final GetRepository getRepository,
+                               final PostRepository postRepository,
+                               final PutRepository putRepository) {
+        this.deleteRepository = deleteRepository;
+        this.getRepository = getRepository;
+        this.postRepository = postRepository;
+        this.putRepository = putRepository;
+    }
 }
