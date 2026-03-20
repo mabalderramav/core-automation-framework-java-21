@@ -9,6 +9,8 @@ import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.
 import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PostRepository;
 import com.miasoftnanus.automation.core.api.application.port.out.infrastructure.PutRepository;
 
+import java.util.Objects;
+
 /**
  * Abstract class responsible for managing client API requests.
  * Acts as a centralized component for handling HTTP methods such as GET, POST, PUT, and DELETE.
@@ -53,9 +55,9 @@ public abstract class ClientRequestManager {
                                final GetRepository getRepository,
                                final PostRepository postRepository,
                                final PutRepository putRepository) {
-        this.deleteRepository = deleteRepository;
-        this.getRepository = getRepository;
-        this.postRepository = postRepository;
-        this.putRepository = putRepository;
+        this.deleteRepository = Objects.requireNonNull(deleteRepository, "deleteRepository must not be null");
+        this.getRepository = Objects.requireNonNull(getRepository, "getRepository must not be null");
+        this.postRepository = Objects.requireNonNull(postRepository, "postRepository must not be null");
+        this.putRepository = Objects.requireNonNull(putRepository, "putRepository must not be null");
     }
 }
