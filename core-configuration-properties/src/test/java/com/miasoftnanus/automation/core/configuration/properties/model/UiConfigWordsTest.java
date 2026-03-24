@@ -80,7 +80,7 @@ class UiConfigWordsTest {
         String result = uiConfigWord.val();
 
         // Assert
-        assertEquals("ui.driverVersion", result, "The val() method should return the correct string representation of UI_CHROME_DRIVER_VERSION.");
+        assertEquals("ui.driverVersion", result, "The val() method should return the correct string representation of UI_DRIVER_VERSION.");
     }
 
     @Test
