@@ -74,13 +74,13 @@ class UiConfigWordsTest {
     @Test
     void testUiChromeDriverVersionVal() {
         // Arrange
-        UiConfigWords uiConfigWord = UiConfigWords.UI_CHROME_DRIVER_VERSION;
+        UiConfigWords uiConfigWord = UiConfigWords.UI_DRIVER_VERSION;
 
         // Act
         String result = uiConfigWord.val();
 
         // Assert
-        assertEquals("ui.chromeDriverVersion", result, "The val() method should return the correct string representation of UI_CHROME_DRIVER_VERSION.");
+        assertEquals("ui.driverVersion", result, "The val() method should return the correct string representation of UI_DRIVER_VERSION.");
     }
 
     @Test
