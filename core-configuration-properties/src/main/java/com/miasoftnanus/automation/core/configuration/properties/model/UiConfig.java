@@ -13,14 +13,14 @@ public class UiConfig extends CommonConfig {
     private int implicitTimeWait;
     private int pageLoadTimeWait;
     private int sleepWaitTime;
-    private String chromeDriverVersion;
+    private String driverVersion;
     private int width;
     private int height;
     private String downloads;
-    private boolean browserLogs;
+    private boolean isBrowserLogsEnabled;
     private String seleniumHubUrl;
     private int seleniumHubPort;
-    private boolean incognitoMode;
+    private boolean isIncognitoMode;
 
     public UiConfig() {
         this.browser = "";
@@ -28,13 +28,13 @@ public class UiConfig extends CommonConfig {
         this.implicitTimeWait = 0;
         this.pageLoadTimeWait = 0;
         this.sleepWaitTime = 0;
-        this.chromeDriverVersion = "";
+        this.driverVersion = "";
         this.width = 0;
         this.height = 0;
         this.downloads = "";
-        this.browserLogs = false;
+        this.isBrowserLogsEnabled = false;
         this.seleniumHubUrl = "";
         this.seleniumHubPort = 0;
-        this.incognitoMode = false;
+        this.isIncognitoMode = false;
     }
 }

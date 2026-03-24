@@ -61,10 +61,10 @@ class UiConfigTest {
         var incognitoModeExpected = false;
 
         // Assertions
-        assertThat(uiConfig.browserLogs())
+        assertThat(uiConfig.isBrowserLogsEnabled())
                 .as("Browser logs should be enabled.")
                 .isEqualTo(browserLogsExpected);
-        assertThat(uiConfig.chromeDriverVersion())
+        assertThat(uiConfig.driverVersion())
                 .as("Chrome driver version should be empty.")
                 .isEqualTo(chromeDriverVersionExpected);
         assertThat(uiConfig.seleniumHubPort())
@@ -73,7 +73,7 @@ class UiConfigTest {
         assertThat(uiConfig.seleniumHubUrl())
                 .as("Selenium hub URL should be http://localhost:4444/wd/hub.")
                 .isEqualTo(seleniumHubUrlExpected);
-        assertThat(uiConfig.incognitoMode())
+        assertThat(uiConfig.isIncognitoMode())
                 .as("Incognito mode should be enabled.")
                 .isEqualTo(incognitoModeExpected);
         assertThat(uiConfig.downloads())

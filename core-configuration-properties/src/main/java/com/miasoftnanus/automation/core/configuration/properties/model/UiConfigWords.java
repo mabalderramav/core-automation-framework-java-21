@@ -11,7 +11,7 @@ public enum UiConfigWords {
     UI_IMPLICIT_TIME("ui.implicitTimeWait"),
     UI_PAGE_LOAD_TIME("ui.pageLoadTimeWait"),
     UI_SLEEP_WAIT_TIME("ui.sleepWaitTime"),
-    UI_CHROME_DRIVER_VERSION("ui.chromeDriverVersion"),
+    UI_DRIVER_VERSION("ui.driverVersion"),
     UI_WIDTH("ui.width"),
     UI_HEIGHT("ui.height"),
     UI_DOWNLOADS("ui.downloads"),

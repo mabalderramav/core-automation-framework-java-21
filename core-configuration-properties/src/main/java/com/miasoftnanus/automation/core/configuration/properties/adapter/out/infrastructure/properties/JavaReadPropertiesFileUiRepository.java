@@ -25,14 +25,14 @@ public class JavaReadPropertiesFileUiRepository implements ReadPropertiesFileUiR
         uiConfig.environmentFilePath(
                 propertiesFileReader.getPropertyValue(CommonConfigWords.ENVIRONMENT_FILE_PATH.val()));
         uiConfig.browser(propertiesFileReader.getPropertyValue(UiConfigWords.UI_BROWSER.val()));
-        uiConfig.browserLogs(
+        uiConfig.isBrowserLogsEnabled(
                 Boolean.parseBoolean(propertiesFileReader.getPropertyValue(UiConfigWords.UI_BROWSER_LOGS.val())));
         uiConfig.pageLoadTimeWait(
                 Integer.parseInt(propertiesFileReader.getPropertyValue(UiConfigWords.UI_PAGE_LOAD_TIME.val())));
         uiConfig.sleepWaitTime(
                 Integer.parseInt(propertiesFileReader.getPropertyValue(UiConfigWords.UI_SLEEP_WAIT_TIME.val())));
-        uiConfig.chromeDriverVersion(
-                propertiesFileReader.getPropertyValue(UiConfigWords.UI_CHROME_DRIVER_VERSION.val()));
+        uiConfig.driverVersion(
+                propertiesFileReader.getPropertyValue(UiConfigWords.UI_DRIVER_VERSION.val()));
         uiConfig.width(
                 Integer.parseInt(propertiesFileReader.getPropertyValue(UiConfigWords.UI_WIDTH.val())));
         uiConfig.height(
@@ -41,7 +41,7 @@ public class JavaReadPropertiesFileUiRepository implements ReadPropertiesFileUiR
         uiConfig.seleniumHubUrl(propertiesFileReader.getPropertyValue(UiConfigWords.UI_SELENIUM_HUB_URL.val()));
         uiConfig.seleniumHubPort(
                 Integer.parseInt(propertiesFileReader.getPropertyValue(UiConfigWords.UI_SELENIUM_HUB_PORT.val())));
-        uiConfig.incognitoMode(
+        uiConfig.isIncognitoMode(
                 Boolean.parseBoolean(propertiesFileReader.getPropertyValue(UiConfigWords.UI_INCOGNITO_MODE.val())));
         uiConfig.explicitTimeWait(
                 Integer.parseInt(propertiesFileReader.getPropertyValue(UiConfigWords.UI_EXPLICIT_TIME.val())));
