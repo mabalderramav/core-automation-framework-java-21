@@ -7,7 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.openqa.selenium.WebDriver;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -21,6 +23,9 @@ class SeleniumChromeRepositoryTest {
     @Mock
     private WebDriver webDriver;
 
+    @Mock
+    private WebDriver.Navigation navigation;
+
     @InjectMocks
     private SeleniumChromeRepository repository;
 
@@ -29,22 +34,24 @@ class SeleniumChromeRepositoryTest {
         String url = "https://example.com/login";
         when(browser.getDriver()).thenReturn(webDriver);
 
-        repository.open(url);
+        assertThatCode(() -> repository.open(url))
+                .doesNotThrowAnyException();
 
         verify(browser).getDriver();
         verify(webDriver).get(url);
-        verifyNoMoreInteractions(browser, webDriver);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
     }
 
     @Test
     void open_passesNullUrlWithoutChangingIt() {
         when(browser.getDriver()).thenReturn(webDriver);
 
-        repository.open(null);
+        assertThatCode(() -> repository.open(null))
+                .doesNotThrowAnyException();
 
         verify(browser).getDriver();
         verify(webDriver).get(null);
-        verifyNoMoreInteractions(browser, webDriver);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
     }
 
     @Test
@@ -56,7 +63,7 @@ class SeleniumChromeRepositoryTest {
                 .isSameAs(boom);
 
         verify(browser).getDriver();
-        verifyNoMoreInteractions(browser, webDriver);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
     }
 
     @Test
@@ -64,14 +71,85 @@ class SeleniumChromeRepositoryTest {
         RuntimeException boom = new RuntimeException("navigation failed");
         String url = "https://example.com";
         when(browser.getDriver()).thenReturn(webDriver);
-        org.mockito.Mockito.doThrow(boom).when(webDriver).get(url);
+        doThrow(boom).when(webDriver).get(url);
 
         assertThatThrownBy(() -> repository.open(url))
                 .isSameAs(boom);
 
         verify(browser).getDriver();
         verify(webDriver).get(url);
-        verifyNoMoreInteractions(browser, webDriver);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void navigateTo_delegatesToBrowserNavigationWithProvidedUrl() {
+        String url = "https://example.com/dashboard";
+        when(browser.getDriver()).thenReturn(webDriver);
+        when(webDriver.navigate()).thenReturn(navigation);
+
+        assertThatCode(() -> repository.navigateTo(url))
+                .doesNotThrowAnyException();
+
+        verify(browser).getDriver();
+        verify(webDriver).navigate();
+        verify(navigation).to(url);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void navigateTo_passesNullUrlWithoutChangingIt() {
+        when(browser.getDriver()).thenReturn(webDriver);
+        when(webDriver.navigate()).thenReturn(navigation);
+
+        assertThatCode(() -> repository.navigateTo(null))
+                .doesNotThrowAnyException();
+
+        verify(browser).getDriver();
+        verify(webDriver).navigate();
+        verify(navigation).to((String) null);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void navigateTo_propagatesExceptionFromBrowserGetDriver() {
+        RuntimeException boom = new RuntimeException("boom");
+        when(browser.getDriver()).thenThrow(boom);
+
+        assertThatThrownBy(() -> repository.navigateTo("https://example.com"))
+                .isSameAs(boom);
+
+        verify(browser).getDriver();
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void navigateTo_propagatesExceptionFromDriverNavigate() {
+        RuntimeException boom = new RuntimeException("cannot create navigation");
+        when(browser.getDriver()).thenReturn(webDriver);
+        when(webDriver.navigate()).thenThrow(boom);
+
+        assertThatThrownBy(() -> repository.navigateTo("https://example.com"))
+                .isSameAs(boom);
+
+        verify(browser).getDriver();
+        verify(webDriver).navigate();
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void navigateTo_propagatesExceptionFromNavigationTo() {
+        RuntimeException boom = new RuntimeException("navigation failed");
+        String url = "https://example.com";
+        when(browser.getDriver()).thenReturn(webDriver);
+        when(webDriver.navigate()).thenReturn(navigation);
+        doThrow(boom).when(navigation).to(url);
+
+        assertThatThrownBy(() -> repository.navigateTo(url))
+                .isSameAs(boom);
+
+        verify(browser).getDriver();
+        verify(webDriver).navigate();
+        verify(navigation).to(url);
+        verifyNoMoreInteractions(browser, webDriver, navigation);
     }
 }
-

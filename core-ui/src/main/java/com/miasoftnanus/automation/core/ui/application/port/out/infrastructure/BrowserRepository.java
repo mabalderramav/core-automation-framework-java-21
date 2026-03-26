@@ -11,4 +11,11 @@ public interface BrowserRepository {
      * @param url the URL to be opened.
      */
     void open(String url);
+
+    /**
+     * Navigates to the specified URL.
+     *
+     * @param url the URL to navigate to.
+     */
+    void navigateTo(String url);
 }
