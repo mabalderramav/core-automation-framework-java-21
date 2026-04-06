@@ -152,4 +152,48 @@ class SeleniumChromeRepositoryTest {
         verify(navigation).to(url);
         verifyNoMoreInteractions(browser, webDriver, navigation);
     }
+
+    // ── close ────────────────────────────────────────────────────────────────
+
+    @Test
+    void close_delegatesToBrowserDriverQuit() {
+        when(browser.getDriver()).thenReturn(webDriver);
+
+        assertThatCode(() -> repository.close())
+                .doesNotThrowAnyException();
+
+        verify(browser).getDriver();
+        verify(webDriver).quit();
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void close_propagatesExceptionFromBrowserGetDriver() {
+        RuntimeException boom = new RuntimeException("driver not initialised");
+        when(browser.getDriver()).thenThrow(boom);
+
+        assertThatThrownBy(() -> repository.close())
+                .isInstanceOf(RuntimeException.class)
+                .isSameAs(boom)
+                .hasMessage("driver not initialised");
+
+        verify(browser).getDriver();
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
+
+    @Test
+    void close_propagatesExceptionFromDriverQuit() {
+        RuntimeException boom = new RuntimeException("quit failed");
+        when(browser.getDriver()).thenReturn(webDriver);
+        doThrow(boom).when(webDriver).quit();
+
+        assertThatThrownBy(() -> repository.close())
+                .isInstanceOf(RuntimeException.class)
+                .isSameAs(boom)
+                .hasMessage("quit failed");
+
+        verify(browser).getDriver();
+        verify(webDriver).quit();
+        verifyNoMoreInteractions(browser, webDriver, navigation);
+    }
 }

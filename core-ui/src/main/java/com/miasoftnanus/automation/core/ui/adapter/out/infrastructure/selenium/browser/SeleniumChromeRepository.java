@@ -39,4 +39,12 @@ public class SeleniumChromeRepository implements BrowserRepository {
     public void navigateTo(String url) {
         browser.getDriver().navigate().to(url);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void close() {
+        browser.getDriver().quit();
+    }
 }
