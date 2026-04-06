@@ -18,4 +18,9 @@ public interface BrowserRepository {
      * @param url the URL to navigate to.
      */
     void navigateTo(String url);
+
+    /**
+     * Closes the currently active browser session.
+     */
+    void close();
 }
