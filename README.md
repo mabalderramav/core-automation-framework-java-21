@@ -1,6 +1,6 @@
-# Core Automation Framework - Java 21
+# Core Automation Framework - Java 25
 
-A modular automation framework built with **Java 21** and **Gradle**, designed to provide reusable core components for configuration-driven UI and API automation.
+A modular automation framework built with **Java 25** and **Gradle 9.5.1**, designed to provide reusable core components for configuration-driven UI and API automation.
 
 ## Overview
 
@@ -24,8 +24,8 @@ The framework is intended to be a foundation for scalable automation solutions w
 
 ## Tech Stack
 
-- **Java 21**
-- **Gradle**
+- **Java 25**
+- **Gradle 9.5.1**
 - **JUnit 5**
 - **AssertJ**
 - **Mockito**
@@ -42,7 +42,7 @@ The framework is intended to be a foundation for scalable automation solutions w
 ## Project Structure
 
 ```text
-core-automation-framework-java-21/
+core-automation-framework-java/
 ├── core-api/
 ├── core-configuration-properties/
 ├── core-environment/
@@ -210,6 +210,7 @@ Recent automated coverage includes tests for:
 
 Recent updates in the framework include:
 
+- migration to **Java 25** and **Gradle 9.5.1**
 - expanded unit coverage for environment mappers, configuration components, API services, repositories, controllers, and request managers
 - new constructor-focused tests for `ClientRequestBasicAuthenticationManager` and `ClientWithoutAuthenticationRequestManager` to verify injected repositories are used correctly
 - improved support for constructor-based repository injection in request managers, making the API layer easier to test and customize
@@ -227,8 +228,8 @@ Integrated support for:
 
 Before using the framework, make sure you have:
 
-- **Java 21**
-- **Gradle** (optional if using the wrapper)
+- **Java 25**
+- **Gradle 9.5.1** (optional if using the wrapper)
 - access to a terminal or command prompt
 
 ---
@@ -317,8 +318,8 @@ Example command:
 
 ```bash
 ./gradlew sonar \
-  -Dsonar.projectKey=core-automation-framework-java-21 \
-  -Dsonar.projectName=core-automation-framework-java-21 \
+  -Dsonar.projectKey=core-automation-framework-java \
+  -Dsonar.projectName=core-automation-framework-java \
   -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.token=YOUR_TOKEN
 ```
@@ -327,8 +328,8 @@ Example command:
 
 ```powershell
 .\gradlew.bat sonar `
-  -Dsonar.projectKey=core-automation-framework-java-21 `
-  -Dsonar.projectName=core-automation-framework-java-21 `
+  -Dsonar.projectKey=core-automation-framework-java `
+  -Dsonar.projectName=core-automation-framework-java `
   -Dsonar.host.url=http://localhost:9000 `
   -Dsonar.token=YOUR_TOKEN
 ```
